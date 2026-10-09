@@ -187,8 +187,8 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
 
 <div class="wrap">
   <header class="top">
-    <div><h1>RIA Call Assistant</h1><p>Follow the steps in order. <b>Cue cards</b> = short prompts. Look at the cue, say it your way, then pause. Keep every fact and claim exactly as written. Switch to <b>Full script</b> only to study. <b>Call map</b> shows where you are and what to do next.</p></div>
-    <div class="hdr-r"><span class="draft">Based on Playbook v2</span><button class="modebtn" type="button" id="mode">Mode: Cue cards</button><button class="newcall" type="button" id="newcall">Start a new call</button></div>
+    <div><h1>RIA Call Assistant</h1><p>Follow the steps in order. Read each line naturally, then pause and let them answer. Keep every fact and claim exactly as written. <b>Call map</b> shows where you are and what to do next.</p></div>
+    <div class="hdr-r"><span class="draft">Based on Playbook v2</span><button class="newcall" type="button" id="newcall">Start a new call</button></div>
   </header>
   <ol class="progress" id="progress" aria-label="Call steps"></ol>
   <section class="map" id="map" aria-label="Call map and next action"></section>
@@ -321,7 +321,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
   fresh();
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
-  var MODE = "cue";
+  var MODE = "full";
   function sayCue(beats, lines) {
     if (MODE === "full" || !beats) return say(lines);
     return '<div class="cues">' + beats.map(function (b, i) { var ask = /^ASK/.test(b); return '<div class="cuec' + (ask ? " ask" : "") + '"><span class="n">' + (i + 1) + "</span><span>" + esc(b) + "</span></div>"; }).join("") +
@@ -494,7 +494,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
   }
   function viewPitch() {
     var t = T(), n = S.who === "owner" ? 4 : 2, k = tkey(), sec = { sell: "5", merge: "6", succ: "7", rec: "8" }[k];
-    var h = head("Step " + n + " · " + t.name, "Give the 30-second pitch", "Lead with: " + t.lead + ". Hit every cue, in your own words.");
+    var h = head("Step " + n + " · " + t.name, "Give the 30-second pitch", "Lead with: " + t.lead + ". Say every line, then stop at the question.");
     h += '<div class="bd">' + src("Section " + sec + ", 30-second pitch.");
     h += '<div class="block"><span class="k">You say <span class="req">Required</span></span>' + sayCue(t.beats, t.pitch) + "</div>";
     h += cue("<b>The pitch ends with a question.</b> Stop and let them answer.");
@@ -615,8 +615,8 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       return S.who === "advisor" ? "Go to the Recruit pitch." : "Go to the opening.";
     }
     if (S.step === "gate") {
-      if (!r.r_gk) return "Ask for [Prospect Name] by first name. Pick what the gatekeeper said to see your cue.";
-      if (!r.r_avail) return "Say your cue, then redirect: ask if [Prospect Name] is available. Aim for a transfer, a time, a direct line or an email.";
+      if (!r.r_gk) return "Ask for [Prospect Name] by first name. Pick what the gatekeeper said to see your answer.";
+      if (!r.r_avail) return "Give your answer, then redirect: ask if [Prospect Name] is available. Aim for a transfer, a time, a direct line or an email.";
       if (r.r_avail === "dnc") return "Thank them and mark Do Not Call in GHL right away.";
       if (r.r_avail === "cb" || r.r_avail === "info" || r.r_avail === "na") return "Write down what you got, thank the gatekeeper by name, then end the call and log it.";
       if (!S.who) return "Confirm who is on the phone: owner or individual advisor?";
@@ -656,8 +656,6 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     var v = { end: viewEnd, greet: viewGreet, gate: viewGate, open: viewOpen, route: viewRoute, pitch: viewPitch, ask: viewAsk, wrap: viewWrap }[S.step];
     $("main").className = "main " + cls();
     $("main").innerHTML = v();
-    if (MODE === "cue" && S.step !== "end") { var bd = $("main").querySelector(".bd"); if (bd) bd.insertAdjacentHTML("afterbegin", '<p class="cuehint"><b>Don\'t read. Talk.</b> Glance at the cue, say it in one breath, then pause. If you lose your place: "Sorry, just to finish..." and go to the next cue.</p>'); }
-    $("mode").textContent = MODE === "cue" ? "Mode: Cue cards" : "Mode: Full script";
     renderProgress(); renderHelp(); renderMap();
   }
   function go(id) { if (!canGo(id)) return; S.step = id; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
@@ -673,7 +671,6 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       var fallback = function () { ta.focus(); ta.select(); ok.textContent = "Press Ctrl+C (or Cmd+C) to copy."; };
       try { navigator.clipboard.writeText(txt).then(function () { ok.textContent = "Copied. Paste it into GHL."; }, fallback); } catch (err) { fallback(); }
     }
-    if (e.target.id === "mode") { MODE = MODE === "cue" ? "full" : "cue"; render(); return; }
     if (e.target.id === "newcall") { fresh(); OPEN = {}; render(); window.scrollTo({ top: 0 }); }
   });
   document.addEventListener("change", function (e) {
