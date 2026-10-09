@@ -59,6 +59,10 @@
   .footer{margin-top:16px;color:var(--muted);font-size:8.5pt;text-align:center}
   .pb{page-break-before:always}
   td.blank{height:44px}
+  tbody.item{page-break-inside:avoid}
+  tbody.item tr:first-child td{border-bottom:none}
+  tr.sample td{background:#f0f6ff;color:#1f3a5f;font-size:9.5pt;padding:5px 8px 8px;border-bottom:1px solid var(--line)}
+  tbody.item:nth-of-type(even) tr:first-child{background:#fff}
 </style>
 </head>
 <body>
@@ -66,7 +70,7 @@
 <div class="cover">
   <h1>Getting Past the Gatekeeper</h1>
   <div class="sub">One Wealth Map RIA outreach</div>
-  <div class="tag">Each situation shows the goal and the reason behind it. Say it in a way that feels natural to you.</div>
+  <div class="tag">Each situation has a goal, a sample response and the reason behind it. Use the samples as a guide, then adjust them to your own style.</div>
 </div>
 
 <div class="grid">
@@ -140,16 +144,14 @@
   <p class="lead">The gatekeeper is checking who you are and why you're calling.</p>
   <table>
     <thead><tr><th class="n">#</th><th class="s">Situation</th><th class="g">Goal</th><th class="w">Why it works</th></tr></thead>
-    <tbody>
-      <tr><td class="n">1</td><td class="s">"What's this regarding?"</td><td class="g">One short, true reason. Then ask for the owner again.</td><td class="w"><span class="like">Like telling a guard "I'm here to see Mr. Reyes."</span> You don't show them your presentation. Short answers sound clear and professional.</td></tr>
-      <tr><td class="n">2</td><td class="s">"Is this a sales call?"</td><td class="g">Answer honestly, give the real reason, then redirect.</td><td class="w"><span class="like">Like a guard asking "Delivery?"</span> "No" alone can sound unclear. "No, it's a business matter" sounds like a visitor.</td></tr>
-      <tr><td class="n">3</td><td class="s">"Where are you calling from?"</td><td class="g">Say the company name only. Add more only if they ask more.</td><td class="w"><span class="like">Like a name tag.</span> It says who you are. Nobody reads a brochure at the front desk.</td></tr>
-      <tr><td class="n">4</td><td class="s">"Do you have an appointment?"</td><td class="g">Say no honestly, then redirect to availability.</td><td class="w"><span class="like">Like walking up without a reservation.</span> Restaurants still seat you if you ask confidently: "No reservation, is a table free now?"</td></tr>
-      <tr><td class="n">5</td><td class="s">"Does the owner know you?"</td><td class="g">Be honest and stay confident.</td><td class="w"><span class="like">Like a new neighbor knocking.</span> You don't pretend to be a relative. Being honest keeps their trust.</td></tr>
-      <tr><td class="n">6</td><td class="s">"How did you get this number?"</td><td class="g">Give the real source. Confirm the wording with your POC.</td><td class="w"><span class="like">Like a shop asked how it got your address.</span> A clear answer calms people. Avoiding the question can feel suspicious.</td></tr>
-      <tr><td class="n">7</td><td class="s">"Can I tell them what it's about?"</td><td class="g">Enough to be passed along. Keep details for the owner.</td><td class="w"><span class="like">Like a sealed letter.</span> The secretary delivers it but doesn't open it. "Business matter" says important and private.</td></tr>
-      <tr><td class="n">8</td><td class="s">They keep asking for more details.</td><td class="g">Stay short without sounding secretive.</td><td class="w"><span class="like">Like a movie trailer.</span> Enough to show it's worth it. The full story is for the owner.</td></tr>
-    </tbody>
+<tbody class="item"><tr><td class="n">1</td><td class="s">"What's this regarding?"</td><td class="g">One short, true reason. Then ask for the owner again.</td><td class="w"><span class="like">Like telling a guard "I'm here to see Mr. Reyes."</span> You don't show them your presentation. Short answers sound clear and professional.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "It's regarding a business matter for [Owner]. Are they available now?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">2</td><td class="s">"Is this a sales call?"</td><td class="g">Answer honestly: no. Then redirect to being connected.</td><td class="w"><span class="like">Like a guard asking "Delivery?"</span> "No" alone can sound unclear. "No, it's a business matter" sounds like a visitor.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "No, it isn't. It's a business matter for [Owner], on behalf of our founder, Ken Himmler. Could you connect me, please?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">3</td><td class="s">"Where are you calling from?"</td><td class="g">Say the company name only. Add more only if they ask more.</td><td class="w"><span class="like">Like a name tag.</span> It says who you are. Nobody reads a brochure at the front desk.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "One Wealth Map. Is [Owner] available, please?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">4</td><td class="s">"Do you have an appointment?"</td><td class="g">Say no honestly, then redirect to availability.</td><td class="w"><span class="like">Like walking up without a reservation.</span> Restaurants still seat you if you ask confidently: "No reservation, is a table free now?"</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "No, I don't. I'm calling on behalf of our founder, Ken Himmler. Is [Owner] available now?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">5</td><td class="s">"Does the owner know you?"</td><td class="g">Be open that this is the first time they'll connect. Then redirect to availability.</td><td class="w"><span class="like">Like a new neighbor knocking.</span> You don't pretend to be a relative. Being honest keeps their trust.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "This would be our first conversation. I'm calling on behalf of our founder about a business matter. Is [Owner] available?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">6</td><td class="s">"How did you get this number?"</td><td class="g">Briefly share the real source, without overexplaining.</td><td class="w"><span class="like">Like a shop asked how it got your address.</span> A clear answer calms people. Avoiding the question can feel suspicious.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Our research team came across your firm. Is [Owner] available now?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">7</td><td class="s">"Can I tell them what it's about?"</td><td class="g">Give a short, credible reason they can pass on to the owner. Then redirect to availability.</td><td class="w"><span class="like">Like a sealed letter.</span> The secretary delivers it but doesn't open it. "Business matter" says important and private.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Sure. Please let [Owner] know it's [Name] from One Wealth Map, calling on behalf of our founder about a business matter. Are they free now, or when should I call back?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">8</td><td class="s">They keep asking for more details.</td><td class="g">Give enough context to sound legitimate and important, without the full pitch. Then redirect.</td><td class="w"><span class="like">Like a movie trailer.</span> Enough to show it's worth it. The full story is for the owner.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "We're a financial advisory firm, and it's regarding a business discussion about [Owner]'s practice. Is [Owner] available?"</td></tr></tbody>
   </table>
 </div>
 
@@ -159,12 +161,10 @@
   <p class="lead">When the owner is busy, find out the best time to call back.</p>
   <table>
     <thead><tr><th class="n">#</th><th class="s">Situation</th><th class="g">Goal</th><th class="w">Why it works</th></tr></thead>
-    <tbody>
-      <tr><td class="n">9</td><td class="s">"They're with a client / in a meeting."</td><td class="g">Get a specific callback time. Log it in GHL.</td><td class="w"><span class="like">Like a doctor in surgery.</span> You ask the nurse what time they'll be out. "Later" isn't a time.</td></tr>
-      <tr><td class="n">10</td><td class="s">"They're out this week."</td><td class="g">Find the day they're back.</td><td class="w"><span class="like">Like a store closed for the holidays.</span> You check the reopening date instead of guessing.</td></tr>
-      <tr><td class="n">11</td><td class="s">"They're busy all day, every day."</td><td class="g">Find a gap: early or late.</td><td class="w"><span class="like">Like catching a busy professor.</span> Not during class. Before the first or after the last.</td></tr>
-      <tr><td class="n">12</td><td class="s">"Everything goes through me."</td><td class="g">Make the gatekeeper your partner.</td><td class="w"><span class="like">Like a barangay hall.</span> Follow their process and the secretary helps you. Fight it, and nothing moves.</td></tr>
-    </tbody>
+<tbody class="item"><tr><td class="n">9</td><td class="s">"They're with a client / in a meeting."</td><td class="g">Get a specific callback time. Log it in GHL.</td><td class="w"><span class="like">Like a doctor in surgery.</span> You ask the nurse what time they'll be out. "Later" isn't a time.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "No problem. What time do they usually finish? Would 3 or 4 PM work better?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">10</td><td class="s">"They're out this week."</td><td class="g">Find the day they're back.</td><td class="w"><span class="like">Like a store closed for the holidays.</span> You check the reopening date instead of guessing.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Thanks for letting me know. What day are they back? I'll call then."</td></tr></tbody>
+<tbody class="item"><tr><td class="n">11</td><td class="s">"They're busy all day, every day."</td><td class="g">Find a gap: early or late.</td><td class="w"><span class="like">Like catching a busy professor.</span> Not during class. Before the first or after the last.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Understood. Are they usually free early in the morning or near the end of the day?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">12</td><td class="s">"Everything goes through me."</td><td class="g">Make the gatekeeper your partner.</td><td class="w"><span class="like">Like a barangay hall.</span> Follow their process and the secretary helps you. Fight it, and nothing moves.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Thank you, I appreciate your help. What's the best way to get a business matter to [Owner]?"</td></tr></tbody>
   </table>
 </div>
 
@@ -174,14 +174,12 @@
   <p class="lead">Say yes to their request, then ask for one more detail.</p>
   <table>
     <thead><tr><th class="n">#</th><th class="s">Situation</th><th class="g">Goal</th><th class="w">Why it works</th></tr></thead>
-    <tbody>
-      <tr><td class="n">13</td><td class="s">"If they're interested, they'll call you back."</td><td class="g">Ask for the best time to call instead.</td><td class="w"><span class="like">Like "we'll text you" after a job interview.</span> You may not hear back. Setting the next step yourself helps.</td></tr>
-      <tr><td class="n">14</td><td class="s">"Send an email."</td><td class="g">Say yes, then ask for a direct email or a time.</td><td class="w"><span class="like">Like "leave it at the front desk."</span> It may sit in a pile. A direct address gives it a real chance.</td></tr>
-      <tr><td class="n">15</td><td class="s">"Send it to info@."</td><td class="g">Avoid the general inbox.</td><td class="w"><span class="like">Like a box marked "General."</span> It might never get opened.</td></tr>
-      <tr><td class="n">16</td><td class="s">"Leave a message."</td><td class="g">Leave it short, and set your own follow-up.</td><td class="w"><span class="like">Like ordering food and waiting forever.</span> Follow up yourself, or it may never come.</td></tr>
-      <tr><td class="n">17</td><td class="s">"Just leave a voicemail."</td><td class="g">Use the playbook voicemail. Under 20 seconds.</td><td class="w"><span class="like">Like a text vs. a long letter.</span> People finish short messages. Say your number slowly, twice.</td></tr>
-      <tr><td class="n">18</td><td class="s">"We get calls like this all the time."</td><td class="g">Show respect. Keep the ask tiny.</td><td class="w"><span class="like">Like asking a busy cashier for one quick thing.</span> "Two minutes" is easy to say yes to.</td></tr>
-    </tbody>
+<tbody class="item"><tr><td class="n">13</td><td class="s">"If they're interested, they'll call you back."</td><td class="g">Ask for the best time to call instead.</td><td class="w"><span class="like">Like "we'll text you" after a job interview.</span> You may not hear back. Setting the next step yourself helps.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "I understand. To save everyone time, when is the best time for me to call back?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">14</td><td class="s">"Send an email."</td><td class="g">Say yes, then ask for a direct email or a time.</td><td class="w"><span class="like">Like "leave it at the front desk."</span> It may sit in a pile. A direct address gives it a real chance.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Happy to. What's [Owner]'s direct email, so it reaches them directly?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">15</td><td class="s">"Send it to info@."</td><td class="g">Avoid the general inbox.</td><td class="w"><span class="like">Like a box marked "General."</span> It might never get opened.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Sure. Is there a direct email for [Owner]? If not, when is a good time to call back?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">16</td><td class="s">"Leave a message."</td><td class="g">Leave it short, and set your own follow-up.</td><td class="w"><span class="like">Like ordering food and waiting forever.</span> Follow up yourself, or it may never come.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Sure. Please let them know [Name] from One Wealth Map called. When is a good time for me to try again?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">17</td><td class="s">"Just leave a voicemail."</td><td class="g">Use the playbook voicemail. Under 20 seconds.</td><td class="w"><span class="like">Like a text vs. a long letter.</span> People finish short messages. Say your number slowly, twice.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Hi [Owner], this is [Name] with One Wealth Map, calling on behalf of our founder, Ken Himmler. Please call me back at [number]. Again, that's [number]."</td></tr></tbody>
+<tbody class="item"><tr><td class="n">18</td><td class="s">"We get calls like this all the time."</td><td class="g">Show respect. Keep the ask tiny.</td><td class="w"><span class="like">Like asking a busy cashier for one quick thing.</span> "Two minutes" is easy to say yes to.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "I understand, and I'll keep it short. When is the best time to reach [Owner] for two minutes?"</td></tr></tbody>
   </table>
 </div>
 
@@ -191,13 +189,11 @@
   <p class="lead">Stay polite and let the owner make the decision.</p>
   <table>
     <thead><tr><th class="n">#</th><th class="s">Situation</th><th class="g">Goal</th><th class="w">Why it works</th></tr></thead>
-    <tbody>
-      <tr><td class="n">19</td><td class="s">"They're not interested." (for the owner)</td><td class="g">Let the owner decide. Ask to send one short note.</td><td class="w"><span class="like">Like a helper saying "Ma'am doesn't want it."</span> Ma'am never saw it.</td></tr>
-      <tr><td class="n">20</td><td class="s">"I handle these decisions."</td><td class="g">Find out kindly if they're an owner or staff.</td><td class="w"><span class="like">Like a barangay captain's secretary.</span> They schedule, but only the captain signs.</td></tr>
-      <tr><td class="n">21</td><td class="s">"We already have an advisor." / "We don't need services."</td><td class="g">Clear up the confusion.</td><td class="w"><span class="like">Like a tutor turned away because "the kids have a teacher."</span> You're there for the school owner, not the kids.</td></tr>
-      <tr><td class="n">22</td><td class="s">"We're not hiring." / "We're not selling."</td><td class="g">Stay calm. Don't explain. Ask for the right person.</td><td class="w"><span class="like">Like a family selling their house.</span> They don't tell the helpers first. Owner plans can be private, even from staff.</td></tr>
-      <tr><td class="n">23</td><td class="s">"Talk to our operations manager."</td><td class="g">Be polite. See if they can help you reach the owner.</td><td class="w"><span class="like">Like being sent to a different window.</span> They may not decide, but they may walk you to the right door.</td></tr>
-    </tbody>
+<tbody class="item"><tr><td class="n">19</td><td class="s">"They're not interested." (for the owner)</td><td class="g">Probe. Find out what led to this answer, without sounding confrontational.</td><td class="w"><span class="like">Like a helper saying "Ma'am doesn't want it."</span> Ma'am never saw it.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "I understand. May I ask what makes you say that? I want to be sure I'm not taking up anyone's time."</td></tr></tbody>
+<tbody class="item"><tr><td class="n">20</td><td class="s">"I handle these decisions."</td><td class="g">Find out kindly if they're an owner or staff.</td><td class="w"><span class="like">Like a barangay captain's secretary.</span> They schedule, but only the captain signs.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Thank you. Are you part of the ownership, or do you help manage operations?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">21</td><td class="s">"We already have an advisor." / "We don't need services."</td><td class="g">Acknowledge their current setup. Clarify the call isn't about replacing their advisor or selling services. Redirect to the owner.</td><td class="w"><span class="like">Like a tutor turned away because "the kids have a teacher."</span> You're there for the school owner, not the kids.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "That's great that you have a setup that works. This isn't about replacing anyone or selling services. It's a business matter for [Owner]. Are they available?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">22</td><td class="s">"We're not hiring." / "We're not selling."</td><td class="g">Stay calm. Don't explain. Ask for the right person.</td><td class="w"><span class="like">Like a family selling their house.</span> They don't tell the helpers first. Owner plans can be private, even from staff.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Understood. It's a business matter for [Owner]. When is a good time to reach them?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">23</td><td class="s">"Talk to our operations manager."</td><td class="g">Be polite. See if they can help you reach the owner.</td><td class="w"><span class="like">Like being sent to a different window.</span> They may not decide, but they may walk you to the right door.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Thank you. Could they help me reach [Owner], or is there a better time to call [Owner] directly?"</td></tr></tbody>
   </table>
 </div>
 
@@ -207,12 +203,10 @@
   <p class="lead">Follow their rules, then ask for another way to reach the owner.</p>
   <table>
     <thead><tr><th class="n">#</th><th class="s">Situation</th><th class="g">Goal</th><th class="w">Why it works</th></tr></thead>
-    <tbody>
-      <tr><td class="n">24</td><td class="s">"No unsolicited calls. Remove us."</td><td class="g">Exit politely. Mark Do Not Call in GHL.</td><td class="w"><span class="like">Like a "No Solicitors" sign.</span> Respecting it protects the company's reputation.</td></tr>
-      <tr><td class="n">25</td><td class="s">"Calls are recorded. They can't discuss this here."</td><td class="g">Respect it. Ask for an email or a better number.</td><td class="w"><span class="like">Like a bank full of CCTV.</span> You don't argue with the rules. You ask to talk somewhere better.</td></tr>
-      <tr><td class="n">26</td><td class="s">"Compliance has to approve this."</td><td class="g">Learn their process.</td><td class="w"><span class="like">Like getting a permit.</span> Go to the right window and things move faster.</td></tr>
-      <tr><td class="n">27</td><td class="s">"Our broker-dealer doesn't allow these calls."</td><td class="g">Stay respectful. Never comment on their agreements.</td><td class="w"><span class="like">Like someone's work contract.</span> You're not their lawyer. That's for the principals.</td></tr>
-    </tbody>
+<tbody class="item"><tr><td class="n">24</td><td class="s">"No unsolicited calls. Remove us."</td><td class="g">Exit politely. Mark Do Not Call in GHL.</td><td class="w"><span class="like">Like a "No Solicitors" sign.</span> Respecting it protects the company's reputation.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Of course. I'll make sure your number is removed. Thank you for your time."</td></tr></tbody>
+<tbody class="item"><tr><td class="n">25</td><td class="s">"Calls are recorded. They can't discuss this here."</td><td class="g">Respect it. Ask for an email or a better number.</td><td class="w"><span class="like">Like a bank full of CCTV.</span> You don't argue with the rules. You ask to talk somewhere better.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "I understand. Is there a better number or email for [Owner]?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">26</td><td class="s">"Compliance has to approve this."</td><td class="g">Learn their process.</td><td class="w"><span class="like">Like getting a permit.</span> Go to the right window and things move faster.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "That makes sense. Who should I send information to for review?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">27</td><td class="s">"Our broker-dealer doesn't allow these calls."</td><td class="g">Stay respectful. Never comment on their agreements.</td><td class="w"><span class="like">Like someone's work contract.</span> You're not their lawyer. That's for the principals.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Understood, I respect that. Is there another way [Owner] prefers to be contacted?"</td></tr></tbody>
   </table>
 </div>
 
@@ -221,12 +215,10 @@
   <div class="section-head"><span class="badge">F</span><h2>Phone systems and wrong contacts</h2></div>
   <table>
     <thead><tr><th class="n">#</th><th class="s">Situation</th><th class="g">Goal</th><th class="w">Why it works</th></tr></thead>
-    <tbody>
-      <tr><td class="n">28</td><td class="s">Phone menu (IVR)</td><td class="g">Reach a real person. Directory first, then "new clients."</td><td class="w"><span class="like">Like a mall directory.</span> Look up the store instead of walking every floor. Note what worked in GHL.</td></tr>
-      <tr><td class="n">29</td><td class="s">"No one here by that name."</td><td class="g">Ask who owns the firm now. Update GHL.</td><td class="w"><span class="like">Like an old address on a package.</span> Fix it, or the next delivery fails too.</td></tr>
-      <tr><td class="n">30</td><td class="s">"They retired / left the firm."</td><td class="g">Find the new owner. Update GHL.</td><td class="w"><span class="like">Like a restaurant with a new owner.</span> New leadership often means new plans.</td></tr>
-      <tr><td class="n">31</td><td class="s">"They passed away."</td><td class="g">Offer condolences and end the call. Note it in GHL.</td><td class="w"><span class="like">Like visiting during a wake.</span> You show respect and leave. Never pitch.</td></tr>
-    </tbody>
+<tbody class="item"><tr><td class="n">28</td><td class="s">Phone menu (IVR)</td><td class="g">Reach a real person. Directory first, then "new clients."</td><td class="w"><span class="like">Like a mall directory.</span> Look up the store instead of walking every floor. Note what worked in GHL.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Tip:</b> Try the directory and search the owner's last name. If there's none, choose "new clients."</td></tr></tbody>
+<tbody class="item"><tr><td class="n">29</td><td class="s">"No one here by that name."</td><td class="g">Ask who owns the firm now. Update GHL.</td><td class="w"><span class="like">Like an old address on a package.</span> Fix it, or the next delivery fails too.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "I may have outdated information. Who owns the firm now?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">30</td><td class="s">"They retired / left the firm."</td><td class="g">Find the new owner. Update GHL.</td><td class="w"><span class="like">Like a restaurant with a new owner.</span> New leadership often means new plans.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Thank you for letting me know. Who leads the firm now?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">31</td><td class="s">"They passed away."</td><td class="g">Offer condolences and end the call. Note it in GHL.</td><td class="w"><span class="like">Like visiting during a wake.</span> You show respect and leave. Never pitch.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "I'm very sorry to hear that. Thank you for telling me, and I apologize for the call."</td></tr></tbody>
   </table>
 </div>
 
@@ -235,19 +227,17 @@
   <div class="section-head"><span class="badge">G</span><h2>Other situations</h2></div>
   <table>
     <thead><tr><th class="n">#</th><th class="s">Situation</th><th class="g">Goal</th><th class="w">Why it works</th></tr></thead>
-    <tbody>
-      <tr><td class="n">32</td><td class="s">A chatty, friendly gatekeeper</td><td class="g">Build rapport. Learn the owner's schedule.</td><td class="w"><span class="like">Like the friendly tita at the sari-sari store</span> who tells you when the owner drops by.</td></tr>
-      <tr><td class="n">33</td><td class="s">A rude gatekeeper, or they hang up</td><td class="g">Stay professional. Try another day.</td><td class="w"><span class="like">Like a grumpy jeepney driver.</span> Their bad day, not yours.</td></tr>
-      <tr><td class="n">34</td><td class="s">"Can you hold?" (long hold)</td><td class="g">Keep the call. Get ready while waiting.</td><td class="w"><span class="like">Like a bank line.</span> Fill out your form while waiting so you're ready when called.</td></tr>
-      <tr><td class="n">35</td><td class="s">Third callback, same gatekeeper</td><td class="g">Use their name. Mention the last call.</td><td class="w"><span class="like">Like the guard who now greets you by name.</span> Being polite and consistent builds familiarity.</td></tr>
-      <tr><td class="n">36</td><td class="s">You get cut off mid&#8209;sentence</td><td class="g">Finish your point calmly, then redirect.</td><td class="w"><span class="like">Like a jeepney stopping short of your stop.</span> You still say "para po" and get off where you need to.</td></tr>
-      <tr><td class="n">37</td><td class="s">The owner answers directly</td><td class="g">Switch to owner mode right away.</td><td class="w"><span class="like">Like the boss walking past you in the lobby.</span> Don't freeze. Greet them and introduce yourself.</td></tr>
-    </tbody>
+<tbody class="item"><tr><td class="n">32</td><td class="s">A chatty, friendly gatekeeper</td><td class="g">Build rapport. Learn the owner's schedule.</td><td class="w"><span class="like">Like the friendly tita at the sari-sari store</span> who tells you when the owner drops by.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Thanks so much, [Gatekeeper]! When is usually the best time to catch [Owner]?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">33</td><td class="s">A rude gatekeeper, or they hang up</td><td class="g">Stay professional. Try another day.</td><td class="w"><span class="like">Like a grumpy jeepney driver.</span> Their bad day, not yours.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Thank you for your time." Then log it and try again another day.</td></tr></tbody>
+<tbody class="item"><tr><td class="n">34</td><td class="s">"Can you hold?" (long hold)</td><td class="g">Keep the call. Get ready while waiting.</td><td class="w"><span class="like">Like a bank line.</span> Fill out your form while waiting so you're ready when called.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Sure, I'll hold. Thank you." If the hold is long: "I don't want to keep you. When is a better time to call?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">35</td><td class="s">Third callback, same gatekeeper</td><td class="g">Use their name. Mention the last call.</td><td class="w"><span class="like">Like the guard who now greets you by name.</span> Being polite and consistent builds familiarity.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Hi [Gatekeeper], it's [Name] from One Wealth Map again. Is [Owner] available today?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">36</td><td class="s">You get cut off mid&#8209;sentence</td><td class="g">Finish your point calmly, then redirect.</td><td class="w"><span class="like">Like a jeepney stopping short of your stop.</span> You still say "para po" and get off where you need to.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Sorry, just to finish: it's a business matter for [Owner]. Are they available?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">37</td><td class="s">The owner answers directly</td><td class="g">Switch to owner mode right away.</td><td class="w"><span class="like">Like the boss walking past you in the lobby.</span> Don't freeze. Greet them and introduce yourself.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Hi [Owner], this is [Name] with One Wealth Map. I'm calling on behalf of our founder, Ken Himmler. Do you have two minutes?"</td></tr></tbody>
   </table>
 </div>
 
 <!-- H -->
-<div class="section" style="page-break-before:always">
+<div class="section">
   <div class="section-head"><span class="badge">H</span><h2>When you reach the owner</h2></div>
   <p class="lead">If the owner is still on the line, you still have a chance to ask a question.</p>
   <div class="flow">
@@ -258,15 +248,13 @@
   </div>
   <table>
     <thead><tr><th class="n">#</th><th class="s">Situation</th><th class="g">Goal</th><th class="w">Why it works</th></tr></thead>
-    <tbody>
-      <tr><td class="n">38</td><td class="s">"I'm good." / "We're doing well."</td><td class="g">Acknowledge with real energy. Then ask one question about what's next.</td><td class="w"><span class="like">Like a healthy person and insurance.</span> Doing well today is a good time to think about later.</td></tr>
-      <tr><td class="n">39</td><td class="s">"I'm busy."</td><td class="g">Respect it. Ask for a few minutes now, or set a time.</td><td class="w"><span class="like">Like an elevator ride.</span> You get one floor's worth of time. Keep it brief and get to the point.</td></tr>
-      <tr><td class="n">40</td><td class="s">"Just send me information."</td><td class="g">Treat it as a semi-win. Try one question first, then send.</td><td class="w"><span class="like">Like flyers in your own inbox.</span> Not all of them get read. Sometimes "send info" is a polite way to end the call.</td></tr>
-      <tr><td class="n">41</td><td class="s">"Not interested" right after your intro</td><td class="g">Ask what they mean, or ask one future question.</td><td class="w"><span class="like">Like rejecting a package before opening it.</span> They may not know yet what the call is about.</td></tr>
-      <tr><td class="n">42</td><td class="s">"What is this about?" from the owner</td><td class="g">Clear purpose in one line, then a question.</td><td class="w"><span class="like">Like a doctor explaining before an exam.</span> People relax when they know why you're there.</td></tr>
-      <tr><td class="n">43</td><td class="s">"Never heard of you." / "You're small."</td><td class="g">Agree, then build up the founder with approved facts.</td><td class="w"><span class="like">Like a new restaurant by an experienced chef.</span> People try it because of the chef's background.</td></tr>
-      <tr><td class="n">44</td><td class="s">They say yes but "I'll book it later."</td><td class="g">Offer two specific times now.</td><td class="w"><span class="like">Like "let's hang out sometime."</span> Without a date, it is easy to forget.</td></tr>
-    </tbody>
+<tbody class="item"><tr><td class="n">38</td><td class="s">"I'm good." / "We're doing well."</td><td class="g">Acknowledge with real energy. Then ask one question about what's next.</td><td class="w"><span class="like">Like a healthy person and insurance.</span> Doing well today is a good time to think about later.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "That's great to hear! When you picture the practice five years from now, are you still running it, handing it off, or already out?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">39</td><td class="s">"I'm busy."</td><td class="g">Respect it. Ask for a few minutes now, or set a time.</td><td class="w"><span class="like">Like an elevator ride.</span> You get one floor's worth of time. Keep it brief and get to the point.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Sounds like I caught you at a busy time. Do you have two minutes now, or is later today better?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">40</td><td class="s">"Just send me information."</td><td class="g">Treat it as a semi-win. Try one question first, then send.</td><td class="w"><span class="like">Like flyers in your own inbox.</span> Not all of them get read. Sometimes "send info" is a polite way to end the call.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Happy to send it. So I send the right information, can I ask one quick question first?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">41</td><td class="s">"Not interested" right after your intro</td><td class="g">Ask what they mean, or ask one future question.</td><td class="w"><span class="like">Like rejecting a package before opening it.</span> They may not know yet what the call is about.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "I understand. May I ask what you mean? Is it the timing, or something else?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">42</td><td class="s">"What is this about?" from the owner</td><td class="g">Clear purpose in one line, then a question.</td><td class="w"><span class="like">Like a doctor explaining before an exam.</span> People relax when they know why you're there.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "We're a multi-family office. Our founder, Ken Himmler, is reaching out to a small number of firm owners about what's next for their practice. Are you the owner, or part of a larger team?"</td></tr></tbody>
+<tbody class="item"><tr><td class="n">43</td><td class="s">"Never heard of you." / "You're small."</td><td class="g">Agree, then build up the founder with approved facts.</td><td class="w"><span class="like">Like a new restaurant by an experienced chef.</span> People try it because of the chef's background.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "That's fair. We're at around $300 million and growing about 40% a year, and our founder has built and sold a few firms. That's why he likes talking owner to owner."</td></tr></tbody>
+<tbody class="item"><tr><td class="n">44</td><td class="s">They say yes but "I'll book it later."</td><td class="g">Offer two specific times now.</td><td class="w"><span class="like">Like "let's hang out sometime."</span> Without a date, it is easy to forget.</td></tr><tr class="sample"><td></td><td colspan="3"><b>Sample:</b> "Let's find a time now so it's on your calendar. Would Tuesday at 10 or Thursday at 2 work better?"</td></tr></tbody>
   </table>
   <div class="callout good">
     <h3>Remember</h3>
