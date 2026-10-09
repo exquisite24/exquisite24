@@ -14,6 +14,7 @@
   --never-bg: #fbeeee; --never-ink: #9a2f2f; --never-line: #ecc4c4;
   --open-bg: #fbf4de; --open-ink: #6b5210; --open-line: #d9bf74;
   --ok-bg: #e3f1e6; --ok-ink: #2f6a3a; --ok-line: #9cc9a5;
+  --script-bg: #e3f3fc; --script-line: #7cb9e0; --script-bar: #2b86c2;
   --f: "Figtree", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
@@ -24,7 +25,7 @@
     --succ-soft: #211f36; --succ-ink: #b9b0ee; --rec-soft: #18291c; --rec-ink: #93cf9d;
     --never-bg: #33191c; --never-ink: #f0a3a3; --never-line: #5e2a2f;
     --open-bg: #352c13; --open-ink: #ecd38a; --open-line: #7a6326;
-    --ok-bg: #16301d; --ok-ink: #9fd6aa; --ok-line: #2f6a3a;
+    --ok-bg: #16301d; --ok-ink: #9fd6aa; --ok-line: #2f6a3a; --script-bg: #10283a; --script-line: #2d5f82; --script-bar: #5aaee3;
     color-scheme: dark;
   }
 }
@@ -35,7 +36,7 @@
   --succ-soft: #211f36; --succ-ink: #b9b0ee; --rec-soft: #18291c; --rec-ink: #93cf9d;
   --never-bg: #33191c; --never-ink: #f0a3a3; --never-line: #5e2a2f;
   --open-bg: #352c13; --open-ink: #ecd38a; --open-line: #7a6326;
-  --ok-bg: #16301d; --ok-ink: #9fd6aa; --ok-line: #2f6a3a;
+  --ok-bg: #16301d; --ok-ink: #9fd6aa; --ok-line: #2f6a3a; --script-bg: #10283a; --script-line: #2d5f82; --script-bar: #5aaee3;
   color-scheme: dark;
 }
 .t-owner { --c: var(--navy); --cs: var(--panel); --ci: var(--navy-ink); }
@@ -77,7 +78,7 @@ header.top p { opacity: .92; font-size: 16px; }
 .k { font-size: 13.5px; font-weight: 800; letter-spacing: .7px; text-transform: uppercase; color: var(--ci, var(--navy-ink)); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .k .req { background: var(--c, var(--navy)); color: #fff; border-radius: 5px; padding: 0 6px; font-size: 11.5px; letter-spacing: .5px; }
 .k .opt { background: var(--line); color: var(--ink); border-radius: 5px; padding: 0 6px; font-size: 11.5px; letter-spacing: .5px; }
-.say { background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 16px; font-weight: 600; font-size: 20px; line-height: 1.35; display: grid; gap: 8px; }
+.say { background: var(--script-bg); border: 1.5px solid var(--script-line); border-left: 6px solid var(--script-bar); border-radius: 10px; padding: 12px 16px; font-weight: 600; font-size: 20px; line-height: 1.35; display: grid; gap: 8px; }
 .say span { display: block; }
 .say.sm { font-size: 18px; }
 .tip { font-size: 15.5px; color: var(--muted); }
