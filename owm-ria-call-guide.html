@@ -269,6 +269,8 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       email: { subj: "A bigger platform for your clients", body: "Hi [Name], our advisors get qualified leads, in-house tax, estate and insurance services for their clients, and help with the back office. Worth a confidential chat? [link] \u00b7 Unsubscribe: reply \"stop\" \u00b7 [address]" } }
   };
   var OPENING = ["Hi [First Name], this is [SDR Name] from One Wealth Map. Thanks for taking my call.", "I'm reaching out to a few firm owners about what's next for their practice.", "That could be growing, partnering, or stepping back someday.", "Do you have two minutes?"];
+  var ADV_OPENING = ["Hi [First Name], this is [SDR Name] from One Wealth Map. Thanks for taking my call.", "I'm reaching out to a few advisors about how they want to grow their practice.", "Do you have two minutes?"];
+  var ADV_WARM = "So I'm curious: how do you feel about how your practice is growing right now?";
   var ABOUT_LINE = ["A little about us: we're an RIA and a multi-family office.", "Our founder has built and sold a few firms, and we've grown to about $300 million.", "We also have tax, estate, insurance and back-office services all in-house."];
   var OPENING_B = ["[Your name], One Wealth Map", "Multi-family office: tax, estate, insurance, back office in-house", "Founder built and sold a few firms · about $300 million", "Reaching a small number of firm owners: what's next for their practice", "ASK: do you have two minutes?"];
   var ROUTING = "When you think about your practice five years from now, do you see yourself still running it, handing it over, or already retired?";
@@ -330,6 +332,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       '</div><details class="full"><summary>Stuck? Show the full line</summary><div class="in">' + say(lines, true) + "</div></details>";
   }
   function say(lines, sm) { return '<div class="say' + (sm ? " sm" : "") + '">' + lines.map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + "</div>"; }
+  function stepNo() { return steps().findIndex(function (x) { return x.id === S.step; }) + 1; }
   function tkey() { return S.who === "advisor" ? "rec" : S.track; }
   function T() { return TRACKS[tkey()]; }
   function cls() { var t = T(); return t ? t.cls : "t-owner"; }
@@ -338,6 +341,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     var list = [{ id: "greet", label: "Greet" }];
     if (S.r.r_isit === "no") list.push({ id: "gate", label: "Gatekeeper" });
     if (S.who === "owner") list.push({ id: "open", label: "Open" }, { id: "route", label: "Discovery" });
+    if (S.who === "advisor") list.push({ id: "open", label: "Open" });
     list.push({ id: "pitch", label: "Pitch" }, { id: "ask", label: "Track questions" }, { id: "wrap", label: "Wrap up" });
     return list;
   }
@@ -348,7 +352,8 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     if (id === "gate") return S.r.r_isit === "no";
     if (S.r.r_isit === "no" && ["on", "new"].indexOf(S.r.r_avail) < 0) return false;
     if (!S.who || S.who === "unsure") return false;
-    if (id === "open" || id === "route") return S.who === "owner";
+    if (id === "open") return S.who === "owner" || S.who === "advisor";
+    if (id === "route") return S.who === "owner";
     if (!T()) return false;
     if (id === "pitch") return true;
     if (id === "ask") return true;
@@ -444,7 +449,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       radio("who", "advisor", "An individual advisor", "Works at someone else's firm → Recruit only", "t-rec") +
       radio("who", "unsure", "Not sure yet", "GHL and the lead source don't say", "t-owner") + "</div></div>"; }
   function unsureBlock() { return '<div class="block"><span class="k">Ask early</span>' + say(["Quick question, so I don't take too much of your time:", "are you the owner of the practice, or part of a larger team?"]) + ansBox("a1", "Their answer") + cue("Their answer tells you which to pick above.") + "</div>"; }
-  function advisorNote() { return '<p class="next"><b>Recruit track.</b> Never pitch "sell your book" or succession to someone who doesn\'t own the firm. Next, go straight to the Recruit pitch.</p>'; }
+  function advisorNote() { return '<p class="next"><b>Recruit track.</b> Never pitch "sell your book" or succession to someone who doesn\'t own the firm. Next, open the call, then give the Recruit pitch.</p>'; }
   function viewGate() {
     var h = head("Step 2 · Gatekeeper", "Get past the gatekeeper", "Short, purpose, redirect, polite. One or two sentences, then ask for [Prospect Name] again.");
     h += '<div class="bd">';
@@ -470,19 +475,25 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       '<p class="tip">Use the one for the track that fits the lead.</p><div class="chks">' + chk("vm", "Voicemail left") + chk("em", "Email sent") + "</div></div></details>";
   }
   function viewOpen() {
-    var h = head("Step 2 · Firm owner", "Open the call", "You already said your name in the greeting, so start from the second line.");
-    h += '<div class="bd">' + src("Section 4.1, Opening (owners).");
-    h += '<div class="block"><span class="k">You say</span>' + (MODE === "cue" ? '<p class="tip">Skip your name: you already said it.</p>' + sayCue(OPENING_B.slice(1), OPENING.slice(1)) : '<div class="say"><span class="skip">' + esc(OPENING[0]) + ' <em>(skip · already said)</em></span>' +
-      OPENING.slice(1).map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + "</div>") + "</div>";
+    var adv = S.who === "advisor", transferred = S.r.r_isit === "no" && S.r.r_avail === "on";
+    var lines = adv ? ADV_OPENING : OPENING;
+    var h = head("Step " + stepNo() + " · " + (adv ? "Advisor" : "Firm owner"), "Open the call", transferred ? "You were just transferred. They haven't heard your name yet, so start from the top." : "You already said your name in the greeting, so start from the second line.");
+    h += '<div class="bd">' + src(adv ? "Section 8, Recruit. Opening adapted from Section 4.1." : "Section 4.1, Opening (owners).");
+    h += '<div class="block"><span class="k">You say</span><div class="say">' + (transferred ? "<span>" + esc(lines[0]) + "</span>" : '<span class="skip">' + esc(lines[0]) + ' <em>(skip · already said)</em></span>') +
+      lines.slice(1).map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + "</div></div>";
     h += choice("r_time", "Their answer to \"Do you have two minutes?\"", [["yes", "Yes"], ["busy", "Busy right now"]]);
-    if (S.r.r_time === "yes") h += '<div class="block"><span class="k">Then say</span>' + say(ABOUT_LINE) + cue("Then go straight to <b>Discovery</b> and ask the routing question.") + "</div>";
+    if (S.r.r_time === "yes") {
+      h += '<div class="block"><span class="k">Then say</span>' + say(ABOUT_LINE) + "</div>";
+      if (adv) h += '<div class="block"><span class="k">Then ask <span class="req">Required</span></span>' + ansBox("warm", ADV_WARM) + ack("Listen. Acknowledge what they said, then go to the pitch.") + "</div>";
+      else h += cue("Then go to <b>Discovery</b> and ask the routing question.");
+    }
     if (S.r.r_time === "busy") h += '<div class="block"><div class="flds">' + field("cb_time", "Better time to call back", "Day / time / time zone") + "</div>" + cue("Agree a call-back time, then press <b>Done</b> below.") + "</div>";
     h += cue('<b>If they ask "What do you mean by family office?":</b> tap it under <b>Questions about us</b> on the right, then come back here.');
     h += nextBlock() + "</div>";
     return h;
   }
   function viewRoute() {
-    var h = head("Step 3 · Firm owner", "Discovery: find the track", "These questions are the same for every owner. Their only job is to tell you which track they're on.");
+    var h = head("Step " + stepNo() + " · Firm owner", "Discovery: find the track", "These questions are the same for every owner. Their only job is to tell you which track they're on.");
     h += '<div class="bd">' + src("Section 4.2 (the routing question), 4.3 (follow-up questions) and 4.4 (what you hear → which track). The questions for each track come later, in Step 5.");
     h += '<div class="block"><span class="k">Ask the routing question <span class="req">Required</span></span>' + ansBox("route", "So I'm curious: " + ROUTING.charAt(0).toLowerCase() + ROUTING.slice(1)) + ack() + "</div>";
     h += '<details><summary>Answer not clear? Follow-up questions (use as needed)</summary><div class="in">' + cue("Acknowledge each answer briefly before the next question.") +
@@ -495,7 +506,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     return h;
   }
   function viewPitch() {
-    var t = T(), n = S.who === "owner" ? 4 : 2, k = tkey(), sec = { sell: "5", merge: "6", succ: "7", rec: "8" }[k];
+    var t = T(), n = stepNo(), k = tkey(), sec = { sell: "5", merge: "6", succ: "7", rec: "8" }[k];
     var h = head("Step " + n + " · " + t.name, "Give the pitch", "Lead with: " + t.lead + ". Describe their situation, explain what we do, then ask. Pause where it says to.");
     h += '<div class="bd">' + src("Section " + sec + ", 30-second pitch. Same message, in a more conversational order.");
     h += '<div class="block"><span class="k">You say <span class="req">Required</span></span>' + sayCue(t.beats, t.pitch) + "</div>";
@@ -512,7 +523,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     return h;
   }
   function viewAsk() {
-    var t = T(), n = S.who === "owner" ? 5 : 3, sec = { sell: "5", merge: "6", succ: "7", rec: "8" }[tkey()];
+    var t = T(), n = stepNo(), sec = { sell: "5", merge: "6", succ: "7", rec: "8" }[tkey()];
     var h = head("Step " + n + " · " + t.name, "Track questions", "These questions are only for the " + t.name + " track. Ask every one and type their answers.");
     h += '<div class="bd">' + src("Section " + sec + ", Questions to ask. Different for each track, so they come after you pick the track and pitch it.");
     h += cue("Acknowledge each answer briefly before the next question.");
@@ -522,7 +533,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     return h;
   }
   function viewWrap() {
-    var t = T(), n = S.who === "owner" ? 6 : 4;
+    var t = T(), n = stepNo();
     var h = head("Step " + n + " · " + t.name, "Wrap up", "Book the next step, confirm the details, then log everything in GHL.");
     h += '<div class="bd">' + src("Section 10, Handoff, NDA & GHL.");
     h += '<p class="next"><b>Book:</b> ' + esc(t.book) + (tkey() === "rec" ? ' <span class="open">Ken to name</span>' : "") + '</p><p class="tip">Stop when they want to discuss numbers, clients or terms. Book the principal call.</p>';
@@ -558,6 +569,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     if (S.r.r_avail) L.push("Gatekeeper result: " + ({ on: "Transferred", cb: "Callback time", info: "Direct line or email", na: "Not available", dnc: "Asked to be removed (DNC)", new: "New contact" }[S.r.r_avail] || ""));
     if (S.checks.vm) L.push("Voicemail left: Yes");
     if (S.checks.em) L.push("Email sent: Yes");
+    if (S.ans.warm) L.push("- " + ADV_WARM + " → " + S.ans.warm);
     if (S.r.r_time === "busy") L.push("Busy. Call back: " + (S.ans.cb_time || ""));
     L.push("", "What they said:");
     if (S.ans.a1) L.push("- Owner or part of a team? → " + S.ans.a1);
@@ -614,7 +626,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       if (r.r_isit === "no") return "A gatekeeper answered. Go to the Gatekeeper step.";
       if (!S.who) return "Confirm who is on the phone: owner or individual advisor?";
       if (S.who === "unsure") return "Ask: \"Are you the owner of the practice, or part of a larger team?\"";
-      return S.who === "advisor" ? "Go to the Recruit pitch." : "Go to the opening.";
+      return "Go to the opening.";
     }
     if (S.step === "gate") {
       if (!r.r_gk) return "Ask for [Prospect Name] by first name. Pick what the gatekeeper said to see your answer.";
@@ -622,7 +634,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       if (r.r_avail === "dnc") return "Thank them and mark Do Not Call in GHL right away.";
       if (r.r_avail === "cb" || r.r_avail === "info" || r.r_avail === "na") return "Write down what you got, thank the gatekeeper by name, then end the call and log it.";
       if (!S.who) return "Confirm who is on the phone: owner or individual advisor?";
-      return S.who === "advisor" ? "Go to the Recruit pitch." : "Go to the opening.";
+      return "Go to the opening.";
     }
     if (S.step === "open") return r.r_time === "busy" ? "Agree a specific callback time in their time zone, then end the call." : "Say the opening, then ask \"Do you have two minutes?\"";
     if (S.step === "route") return S.track ? "Go to the pitch for the track you picked." : "Ask the five-year question. Listen for the track (sell, merge, succession).";
