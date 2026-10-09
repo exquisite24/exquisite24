@@ -268,7 +268,8 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
       vm: ["Hi [Name], this is [SDR Name] from One Wealth Map, a multi-family office.", "We're talking with advisors who want more leads and more services to offer clients.", "It's confidential, with no pressure.", "Would a quick call be worth it?", "My number is [number]."],
       email: { subj: "A bigger platform for your clients", body: "Hi [Name], our advisors get qualified leads, in-house tax, estate and insurance services for their clients, and help with the back office. Worth a confidential chat? [link] \u00b7 Unsubscribe: reply \"stop\" \u00b7 [address]" } }
   };
-  var OPENING = ["Hi [First Name], this is [SDR Name] from One Wealth Map. Thanks for taking my call.", "I'm reaching out to a few firm owners about what's next for their practice.", "That could be growing, partnering, or stepping back someday.", "A little about us: we're an RIA and a multi-family office.", "We have tax, estate, insurance and back-office services all in-house.", "Our founder has built and sold a few firms, and we've grown to about $300 million.", "Do you have two minutes?"];
+  var OPENING = ["Hi [First Name], this is [SDR Name] from One Wealth Map. Thanks for taking my call.", "I'm reaching out to a few firm owners about what's next for their practice.", "That could be growing, partnering, or stepping back someday.", "Do you have two minutes?"];
+  var ABOUT_LINE = ["A little about us: we're an RIA and a multi-family office.", "Our founder has built and sold a few firms, and we've grown to about $300 million.", "We also have tax, estate, insurance and back-office services all in-house."];
   var OPENING_B = ["[Your name], One Wealth Map", "Multi-family office: tax, estate, insurance, back office in-house", "Founder built and sold a few firms · about $300 million", "Reaching a small number of firm owners: what's next for their practice", "ASK: do you have two minutes?"];
   var ROUTING = "When you think about your practice five years from now, do you see yourself still running it, handing it over, or already retired?";
   var FOLLOWUPS = ["How many more years do you want to keep seeing clients?", "Is there someone in the firm who could take over?", "If you could hand over one part of running the business tomorrow, what would it be?", "When clients need tax, estate or insurance help, where do you send them?", "What matters most to you about what comes next? Your clients, your staff, the money, or your time?"];
@@ -288,12 +289,12 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     { id: "appt", kw: ["No", "Business matter", "ASK: available now?"], q: "\"Do you have an appointment?\"", goal: "Say no honestly, then redirect to availability.", say: ["No, I don't.", "It's a business matter for [Owner].", "Are they available now?"] },
     { id: "know", kw: ["First conversation", "Business matter", "ASK: is [Owner] available?"], q: "\"Does the owner know you?\"", goal: "Be open that this is the first time they'll connect.", say: ["This would be our first conversation.", "It's regarding a business matter.", "Is [Owner] available?"] },
     { id: "number", kw: ["Real source, one line", "ASK: available now?"], q: "\"How did you get this number?\"", goal: "Briefly share the real source. If you don't know, don't guess.", say: ["Our team came across your firm through our research.", "Is [Owner] available now?"] },
-    { id: "tell", kw: ["[Your name], One Wealth Map", "Business matter", "ASK: free now, or when to call back?"], q: "\"Can I tell them what it's about?\"", goal: "A short, credible reason they can pass on. Then redirect.", say: ["Sure. Please let [Owner] know it's [SDR Name] from One Wealth Map, calling about a business matter.", "Are they free now, or when should I call back?"] },
+    { id: "tell", kw: ["[Your name], One Wealth Map", "Business matter", "ASK: available now?"], q: "\"Can I tell them what it's about?\"", goal: "A short, credible reason they can pass on. Then redirect.", say: ["Sure. Please let [Owner] know it's [SDR Name] from One Wealth Map, calling about a business matter.", "Is [Owner] available now?"] },
     { id: "details", kw: ["Registered investment adviser", "Business discussion about their practice", "ASK: available?"], q: "They keep asking for details", goal: "Enough context to sound legitimate, without the full pitch.", say: ["We're a registered investment adviser. It's about a business matter for [Owner]'s practice.", "Is [Owner] available?"] },
     { id: "affil", kw: ["No: independent RIA, not affiliated", "Business matter", "ASK: available?"], q: "\"Are you with [their firm or broker-dealer]?\"", goal: "A clear, honest no. Then redirect.", say: ["No, we're an independent RIA, not affiliated with [firm name].", "It's a business matter for [Owner].", "Are they available?"] },
     { id: "busy", kw: ["No problem", "ASK: when do they finish?", "Offer two times, their time zone"], q: "\"They're with a client / in a meeting.\"", goal: "Get a specific callback time in their time zone.", say: ["No problem. What time do they usually finish?", "Would 3 or 4 PM your time work better?"] },
     { id: "email", kw: ["Happy to", "ASK: their direct email?"], q: "\"Send an email.\" / \"Send it to info@.\"", goal: "Say yes, then ask for a direct email or a time.", say: ["Sure. What's [Owner]'s direct email, so it goes straight to them?"] },
-    { id: "msg", kw: ["Leave your name and company", "ASK: when should I try again?"], q: "\"Leave a message.\" / \"They'll call you back.\"", goal: "Leave it short and set your own follow-up.", say: ["Sure. Please let them know [SDR Name] from One Wealth Map called.", "When is a good time for me to try again?"] },
+    { id: "msg", kw: ["Leave your name and company", "ASK: direct line or email?"], q: "\"Leave a message.\" / \"They'll call you back.\"", goal: "Leave it short. Ask for a direct line or email.", say: ["Sure. Please let them know [SDR Name] from One Wealth Map called.", "Is there a direct line or email where I can reach [Owner]?"] },
     { id: "notint", kw: ["I understand", "ASK: what makes you say that?"], q: "\"They're not interested.\" (for the owner)", goal: "Probe without sounding confrontational.", say: ["I understand. May I ask what makes you say that?"] },
     { id: "decide", kw: ["Thank you", "ASK: part of ownership, or operations?"], q: "\"I handle these decisions.\"", goal: "Find out kindly if they're an owner or staff.", say: ["Thank you. Are you part of the ownership, or do you help manage operations?"] },
     { id: "recorded", kw: ["I understand", "ASK: better number or email?"], q: "\"Calls are recorded. They can't discuss this here.\"", goal: "Respect it. Ask for another way to reach the owner.", say: ["I understand. Is there a better number or email for [Owner]?"] },
@@ -301,7 +302,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
   ];
   var OWNER_OBJ = [
     { q: "\"I'm good.\" / \"We're doing well.\"", say: ["Good to hear.", "Many owners say that's a good time to plan ahead, while there's no pressure.", "Can I ask you a quick question about the next few years?"] },
-    { q: "\"I'm busy.\"", say: ["Sorry, it sounds like I caught you at a busy time.", "Do you have two minutes now, or is later today better?"] },
+    { q: "\"I'm busy.\"", say: ["I understand. I'll be quick.", "It's only two minutes. Is that okay?"], note: "Offer a callback time only if they still say no." },
     { q: "\"Just send me information.\"", say: ["Sure, I can send it.", "So I send the right information, can I ask you one quick question first?"] },
     { q: "\"Not interested.\" (right after the intro)", say: ["I understand. Can I ask why?", "Is it the timing, or something else?"] },
     { q: "\"Never heard of you.\" / \"You're small.\"", say: ["That's fair.", "We're at about $300 million, and we're growing about 40% a year.", "Our founder has built and sold a few firms.", "He's been on both sides of these conversations.", "Would 20 minutes with our principals this week be worth it?"] },
@@ -474,7 +475,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     h += '<div class="block"><span class="k">You say</span>' + (MODE === "cue" ? '<p class="tip">Skip your name: you already said it.</p>' + sayCue(OPENING_B.slice(1), OPENING.slice(1)) : '<div class="say"><span class="skip">' + esc(OPENING[0]) + ' <em>(skip · already said)</em></span>' +
       OPENING.slice(1).map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + "</div>") + "</div>";
     h += choice("r_time", "Their answer to \"Do you have two minutes?\"", [["yes", "Yes"], ["busy", "Busy right now"]]);
-    if (S.r.r_time === "yes") h += ack("Acknowledge, then go to Discovery.");
+    if (S.r.r_time === "yes") h += '<div class="block"><span class="k">Then say</span>' + say(ABOUT_LINE) + cue("Then go straight to <b>Discovery</b> and ask the routing question.") + "</div>";
     if (S.r.r_time === "busy") h += '<div class="block"><div class="flds">' + field("cb_time", "Better time to call back", "Day / time / time zone") + "</div>" + cue("Agree a call-back time, then press <b>Done</b> below.") + "</div>";
     h += cue('<b>If they ask "What do you mean by family office?":</b> tap it under <b>Questions about us</b> on the right, then come back here.');
     h += nextBlock() + "</div>";
@@ -483,7 +484,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
   function viewRoute() {
     var h = head("Step 3 · Firm owner", "Discovery: find the track", "These questions are the same for every owner. Their only job is to tell you which track they're on.");
     h += '<div class="bd">' + src("Section 4.2 (the routing question), 4.3 (follow-up questions) and 4.4 (what you hear → which track). The questions for each track come later, in Step 5.");
-    h += '<div class="block"><span class="k">Ask the routing question <span class="req">Required</span></span>' + ansBox("route", ROUTING) + ack() + "</div>";
+    h += '<div class="block"><span class="k">Ask the routing question <span class="req">Required</span></span>' + ansBox("route", "So I'm curious: " + ROUTING.charAt(0).toLowerCase() + ROUTING.slice(1)) + ack() + "</div>";
     h += '<details><summary>Answer not clear? Follow-up questions (use as needed)</summary><div class="in">' + cue("Acknowledge each answer briefly before the next question.") +
       FOLLOWUPS.map(function (q, i) { return ansBox("fu" + i, q); }).join("") + "</div></details>";
     h += '<div class="block"><span class="k">What do you hear? Pick the track <span class="req">Required</span></span><div class="opts">' +
@@ -617,7 +618,7 @@ details.full summary { font-size: 14.5px; color: var(--muted); }
     }
     if (S.step === "gate") {
       if (!r.r_gk) return "Ask for [Prospect Name] by first name. Pick what the gatekeeper said to see your answer.";
-      if (!r.r_avail) return "Give your answer, then redirect: ask if [Prospect Name] is available. Aim for a transfer, a time, a direct line or an email.";
+      if (!r.r_avail) return "Give your answer, then redirect: ask if [Prospect Name] is available. Aim for a transfer first. Ask for a callback time only if they are truly not available.";
       if (r.r_avail === "dnc") return "Thank them and mark Do Not Call in GHL right away.";
       if (r.r_avail === "cb" || r.r_avail === "info" || r.r_avail === "na") return "Write down what you got, thank the gatekeeper by name, then end the call and log it.";
       if (!S.who) return "Confirm who is on the phone: owner or individual advisor?";
