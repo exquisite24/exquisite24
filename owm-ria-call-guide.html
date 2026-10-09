@@ -151,6 +151,15 @@ summary { align-items: flex-start; }
 .src { font-size: 15px; color: var(--muted); background: var(--paper); border: 1px dashed var(--line); border-radius: 8px; padding: 6px 11px; }
 .src b { color: var(--ink); }
 [hidden] { display: none !important; }
+/* Cue cards */
+.cues { display: grid; gap: 6px; }
+.cuec { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: center; background: var(--card); border: 1.5px solid var(--line); border-left: 5px solid var(--c, var(--navy)); border-radius: 10px; padding: 8px 12px; font-size: 19px; font-weight: 700; }
+.cuec .n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--cs, var(--panel)); color: var(--ci, var(--navy-ink)); font-size: 14px; font-weight: 800; }
+.cuec.ask { border-left-color: var(--ok-ink); }
+details.full { background: transparent; border: 1px dashed var(--line); }
+details.full summary { font-size: 14.5px; color: var(--muted); }
+.modebtn { border: 1.5px solid rgba(255,255,255,.6); background: #fff; color: var(--navy); border-radius: 8px; padding: 6px 12px; font-weight: 800; font-size: 15px; cursor: pointer; }
+.cuehint { background: var(--ok-bg); color: var(--ok-ink); border: 1px solid var(--ok-line); border-radius: 10px; padding: 8px 12px; font-size: 15.5px; }
 /* Call map */
 .map { background: var(--paper); border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 16px; display: grid; gap: 10px; }
 .map h3 { font-size: 14px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--navy-ink); }
@@ -178,8 +187,8 @@ summary { align-items: flex-start; }
 
 <div class="wrap">
   <header class="top">
-    <div><h1>RIA Call Assistant</h1><p>Follow the steps in order. <b>Solid boxes</b> = playbook lines. Keep every fact and claim exactly as written. <b>Acknowledge</b> = respond briefly in your own words, then continue. <b>Call map</b> shows where you are and what to do next.</p></div>
-    <div class="hdr-r"><span class="draft">Based on Playbook v2</span><button class="newcall" type="button" id="newcall">Start a new call</button></div>
+    <div><h1>RIA Call Assistant</h1><p>Follow the steps in order. <b>Cue cards</b> = short prompts. Look at the cue, say it your way, then pause. Keep every fact and claim exactly as written. Switch to <b>Full script</b> only to study. <b>Call map</b> shows where you are and what to do next.</p></div>
+    <div class="hdr-r"><span class="draft">Based on Playbook v2</span><button class="modebtn" type="button" id="mode">Mode: Cue cards</button><button class="newcall" type="button" id="newcall">Start a new call</button></div>
   </header>
   <ol class="progress" id="progress" aria-label="Call steps"></ol>
   <section class="map" id="map" aria-label="Call map and next action"></section>
@@ -204,6 +213,7 @@ summary { align-items: flex-start; }
         { q: "\"I'm talking to other buyers.\"", say: ["That makes sense.", "Plenty of owners look at a few options.", "The difference we'd bring is what your clients get afterward.", "Worth adding us to the list?"] },
         { q: "\"I'm not ready yet.\"", say: ["Totally fair.", "Would it be useful to plan for when you are?"], go: "succ", why: "Pivot to Succession" }
       ],
+      beats: ["Mirror them: thinking about being done sooner", "Their two worries: clients taken care of, handled quietly and fairly", "Clients get more with us: tax, estate, insurance in-house", "Our founder has been on both sides of these deals", "ASK: a confidential call with our principals? No commitment, NDA first"],
       book: "Confidential call with principals (NDA first)", nda: true, tag: "RIA - Sell",
       never: "\"We'll get you top dollar.\" \"We pay X times revenue.\" \"Your clients will all come with you.\"",
       vm: ["Hi [Name], [SDR Name] with One Wealth Map.", "Totally confidential:", "if you've thought about stepping away from the practice, I'd welcome a quiet conversation about what that could look like for you and your clients.", "[number].", "Again, [SDR Name], [number]."],
@@ -219,6 +229,7 @@ summary { align-items: flex-start; }
         { q: "\"How does the money work?\"", say: ["I'm not the right person for economics.", "The principals go through that transparently."] },
         { q: "\"Honestly, I'd rather just be done\"", say: null, go: "sell", why: "Switch to Sell" }
       ],
+      beats: ["Mirror them: love clients, tired of running the business", "You keep your clients and keep advising", "We take back office, compliance, payroll, bookkeeping", "Offer tax, estate, insurance under one roof", "You stay the advisor, not the whole business", "ASK: worth 20 minutes with our principals?"],
       book: "\"How merging works\" call with principals", nda: true, tag: "RIA - Merge",
       never: "\"Nothing changes for you.\" \"We'll double your book.\" \"You'll make more money.\"",
       vm: ["Hi [Name], [SDR Name] at One Wealth Map.", "We work with owners who love advising but are tired of running the business.", "You keep your clients;", "we take the back office and add tax, estate and insurance.", "Worth 20 minutes?", "[number]."],
@@ -234,6 +245,7 @@ summary { align-items: flex-start; }
         { q: "\"I want to keep going for a long time\"", say: null, go: "merge", why: "Pitch merge and stay on" },
         { q: "\"Actually, I'd rather be done sooner.\"", say: null, go: "sell", why: "Switch to Sell" }
       ],
+      beats: ["ASK first: do you have a written succession plan?", "Most don't: no obvious person to hand it to", "We become that successor, on your timeline", "Phased in over years: clients meet a full team first", "Nothing has to happen now: it's about a plan", "ASK: a confidential conversation with our principals?"],
       book: "Confidential succession-planning call", nda: true, tag: "RIA - Succession",
       never: "\"We'll lock in your price now.\" \"You won't have to do anything.\"",
       vm: ["Hi [Name], [SDR Name] with One Wealth Map.", "Most owners don't have a written succession plan.", "We help owners plan one on their own timeline.", "Happy to talk confidentially.", "[number]."],
@@ -249,16 +261,18 @@ summary { align-items: flex-start; }
         { q: "\"I'm happy where I am.\"", say: ["Great to hear.", "If that ever changes, I'd love to be the call you make.", "Mind if I check back in a few months?"] },
         { q: "They raise their non-solicit or non-compete", say: ["That's a question for your attorney and our team.", "I can't advise on it."] }
       ],
-      book: "Intro call with the recruiting lead (Ken to name)", nda: false, tag: "RIA - Recruit",
+      beats: ["Advisors who want to grow faster than their setup allows", "We're a multi-family office", "Qualified conversations, in-house tax/estate/insurance, back office and AI tools", "No decision needed today", "ASK: a confidential 20-minute conversation?"],
+      book: "Intro call with the recruiting lead", nda: false, tag: "RIA - Recruit",
       never: "\"Bring your client list.\" \"Your non-compete won't matter.\" \"You'll double your income.\"",
       vm: ["Hi [Name], [SDR Name] at One Wealth Map, a multi-family office.", "We're talking with a few advisors who want more lead flow and a bigger platform to offer clients.", "Confidential, no pressure.", "[number]."],
       email: { subj: "A bigger platform for your clients", body: "Hi [Name], our advisors plug into qualified lead flow, an in-house tax, estate and insurance platform, and a handled back office. Worth a confidential chat? [link] · Unsubscribe: reply \"stop\" · [address]" } }
   };
   var OPENING = ["Hi [First Name], this is [SDR Name] with One Wealth Map.", "We're a multi-family office, an RIA with tax, estate, insurance and back office all in-house.", "Our founder has built and sold a few firms, and we've grown to around $300 million.", "I'm reaching out to a small number of firm owners about what's next for their practice,", "whether that's growing, partnering, or eventually stepping back.", "Do you have two minutes?"];
+  var OPENING_B = ["[Your name], One Wealth Map", "Multi-family office: tax, estate, insurance, back office in-house", "Founder built and sold a few firms · about $300 million", "Reaching a small number of firm owners: what's next for their practice", "ASK: do you have two minutes?"];
   var ROUTING = "When you picture the practice five years from now, are you still running it, handing it off, or already out?";
   var FOLLOWUPS = ["How many more years do you want to be seeing clients?", "Is there someone in the firm lined up to take over?", "If you could hand off one part of running the business tomorrow, what would it be?", "How much do your clients ask for tax, estate or insurance help you currently refer out?", "What matters most to you in whatever comes next: your clients, your staff, the financial outcome, or your time?"];
   var ABOUT_US = [
-    { q: "\"What do you mean by family office?\"", note: "Under 60 seconds, then ask a question back.", say: ["Good question.", "A family office is the private team very wealthy families hire to run everything:", "investments, tax, estate, insurance, bookkeeping.", "One Wealth Map is a multi-family office,", "so we offer that same coordinated team to a lot of families instead of just one.", "Under one roof we have tax prep and planning,", "trust drafting with a national attorney network,", "a full insurance agency,", "bookkeeping, payroll and benefits,", "plus investment management, all working from one plan.", "For an advisor like you, that means your clients get all of that without you having to build it.", "Out of curiosity, how much of that do your clients get today,", "and how much do you refer out?"] },
+    { q: "\"What do you mean by family office?\"", note: "Under 60 seconds, then ask a question back.", beats: ["Private team wealthy families hire for everything", "We offer that team to many families", "In-house: tax, trusts, insurance, bookkeeping, payroll, investments, one plan", "For you: your clients get all of it without you building it", "ASK: how much do your clients get today, and how much do you refer out?"], say: ["Good question.", "A family office is the private team very wealthy families hire to run everything:", "investments, tax, estate, insurance, bookkeeping.", "One Wealth Map is a multi-family office,", "so we offer that same coordinated team to a lot of families instead of just one.", "Under one roof we have tax prep and planning,", "trust drafting with a national attorney network,", "a full insurance agency,", "bookkeeping, payroll and benefits,", "plus investment management, all working from one plan.", "For an advisor like you, that means your clients get all of that without you having to build it.", "Out of curiosity, how much of that do your clients get today,", "and how much do you refer out?"] },
     { q: "\"Isn't that just a bigger RIA?\"", say: ["We are an RIA, but the difference is everything else in-house and coordinated.", "Most RIAs refer out tax, estate and insurance.", "We do it on one team."] },
     { q: "\"How big are you?\"", ok: "Ken confirmed", say: ["Around $300M and growing about 40% a year."], note: "Approved figures only. No other numbers." },
     { q: "\"What are your client minimums?\"", say: ["Our principals can walk you through who we serve best."], note: "Ken's comment (background): ADV minimum is $2M; we allow lower, down to $350K, with other opportunities (businesses, real estate) or for Tier 3 or 4 advisors. Sam is writing the approved script line." },
@@ -267,22 +281,22 @@ summary { align-items: flex-start; }
     { q: "Anything you can't answer", say: ["Great question.", "That's exactly what [Principal] will cover.", "Let me get you time with them."] }
   ];
   var GK = [
-    { id: "regarding", q: "\"What's this regarding?\"", goal: "One short, true reason. Then ask for the owner again.", say: ["It's regarding a business matter for [Owner].", "Are they available now?"] },
-    { id: "sales", q: "\"Is this a sales call?\"", goal: "Answer honestly: no. Then redirect to being connected.", say: ["No, it isn't.", "It's a business matter for [Owner].", "Could you connect me, please?"] },
-    { id: "where", q: "\"Where are you calling from?\"", goal: "Company name only. Add more only if they ask more.", say: ["One Wealth Map.", "Is [Owner] available, please?"] },
-    { id: "appt", q: "\"Do you have an appointment?\"", goal: "Say no honestly, then redirect to availability.", say: ["No, I don't.", "It's a business matter for [Owner].", "Are they available now?"] },
-    { id: "know", q: "\"Does the owner know you?\"", goal: "Be open that this is the first time they'll connect.", say: ["This would be our first conversation.", "It's regarding a business matter.", "Is [Owner] available?"] },
-    { id: "number", q: "\"How did you get this number?\"", goal: "Briefly share the real source. If you don't know, don't guess.", say: ["Our team came across your firm through our research.", "Is [Owner] available now?"] },
-    { id: "tell", q: "\"Can I tell them what it's about?\"", goal: "A short, credible reason they can pass on. Then redirect.", say: ["Sure. Please let [Owner] know it's [SDR Name] from One Wealth Map, calling about a business matter.", "Are they free now, or when should I call back?"] },
-    { id: "details", q: "They keep asking for details", goal: "Enough context to sound legitimate, without the full pitch.", say: ["We're a registered investment adviser, and it's regarding a business discussion about [Owner]'s practice.", "Is [Owner] available?"] },
-    { id: "affil", q: "\"Are you with [their firm or broker-dealer]?\"", goal: "A clear, honest no. Then redirect.", say: ["No, we're an independent RIA, not affiliated with [firm name].", "It's a business matter for [Owner].", "Are they available?"] },
-    { id: "busy", q: "\"They're with a client / in a meeting.\"", goal: "Get a specific callback time in their time zone.", say: ["No problem. What time do they usually finish?", "Would 3 or 4 PM your time work better?"] },
-    { id: "email", q: "\"Send an email.\" / \"Send it to info@.\"", goal: "Say yes, then ask for a direct email or a time.", say: ["Happy to. What's [Owner]'s direct email, so it reaches them directly?"] },
-    { id: "msg", q: "\"Leave a message.\" / \"They'll call you back.\"", goal: "Leave it short and set your own follow-up.", say: ["Sure. Please let them know [SDR Name] from One Wealth Map called.", "When is a good time for me to try again?"] },
-    { id: "notint", q: "\"They're not interested.\" (for the owner)", goal: "Probe without sounding confrontational.", say: ["I understand. May I ask what makes you say that?", "That helps me know if a call with [Owner] still makes sense."] },
-    { id: "decide", q: "\"I handle these decisions.\"", goal: "Find out kindly if they're an owner or staff.", say: ["Thank you. Are you part of the ownership, or do you help manage operations?"] },
-    { id: "recorded", q: "\"Calls are recorded. They can't discuss this here.\"", goal: "Respect it. Ask for another way to reach the owner.", say: ["I understand. Is there a better number or email for [Owner]?"] },
-    { id: "remove", q: "\"No unsolicited calls. Remove us.\"", goal: "Exit politely. Mark Do Not Call in GHL right away.", say: ["Of course. I'll make sure your number is removed.", "Thank you for your time."] }
+    { id: "regarding", kw: ["Business matter for [Owner]", "ASK: available now?"], q: "\"What's this regarding?\"", goal: "One short, true reason. Then ask for the owner again.", say: ["It's regarding a business matter for [Owner].", "Are they available now?"] },
+    { id: "sales", kw: ["No", "Business matter for [Owner]", "ASK: connect me, please?"], q: "\"Is this a sales call?\"", goal: "Answer honestly: no. Then redirect to being connected.", say: ["No, it isn't.", "It's a business matter for [Owner].", "Could you connect me, please?"] },
+    { id: "where", kw: ["One Wealth Map", "ASK: is [Owner] available?"], q: "\"Where are you calling from?\"", goal: "Company name only. Add more only if they ask more.", say: ["One Wealth Map.", "Is [Owner] available, please?"] },
+    { id: "appt", kw: ["No", "Business matter", "ASK: available now?"], q: "\"Do you have an appointment?\"", goal: "Say no honestly, then redirect to availability.", say: ["No, I don't.", "It's a business matter for [Owner].", "Are they available now?"] },
+    { id: "know", kw: ["First conversation", "Business matter", "ASK: is [Owner] available?"], q: "\"Does the owner know you?\"", goal: "Be open that this is the first time they'll connect.", say: ["This would be our first conversation.", "It's regarding a business matter.", "Is [Owner] available?"] },
+    { id: "number", kw: ["Real source, one line", "ASK: available now?"], q: "\"How did you get this number?\"", goal: "Briefly share the real source. If you don't know, don't guess.", say: ["Our team came across your firm through our research.", "Is [Owner] available now?"] },
+    { id: "tell", kw: ["[Your name], One Wealth Map", "Business matter", "ASK: free now, or when to call back?"], q: "\"Can I tell them what it's about?\"", goal: "A short, credible reason they can pass on. Then redirect.", say: ["Sure. Please let [Owner] know it's [SDR Name] from One Wealth Map, calling about a business matter.", "Are they free now, or when should I call back?"] },
+    { id: "details", kw: ["Registered investment adviser", "Business discussion about their practice", "ASK: available?"], q: "They keep asking for details", goal: "Enough context to sound legitimate, without the full pitch.", say: ["We're a registered investment adviser, and it's regarding a business discussion about [Owner]'s practice.", "Is [Owner] available?"] },
+    { id: "affil", kw: ["No: independent RIA, not affiliated", "Business matter", "ASK: available?"], q: "\"Are you with [their firm or broker-dealer]?\"", goal: "A clear, honest no. Then redirect.", say: ["No, we're an independent RIA, not affiliated with [firm name].", "It's a business matter for [Owner].", "Are they available?"] },
+    { id: "busy", kw: ["No problem", "ASK: when do they finish?", "Offer two times, their time zone"], q: "\"They're with a client / in a meeting.\"", goal: "Get a specific callback time in their time zone.", say: ["No problem. What time do they usually finish?", "Would 3 or 4 PM your time work better?"] },
+    { id: "email", kw: ["Happy to", "ASK: their direct email?"], q: "\"Send an email.\" / \"Send it to info@.\"", goal: "Say yes, then ask for a direct email or a time.", say: ["Happy to. What's [Owner]'s direct email, so it reaches them directly?"] },
+    { id: "msg", kw: ["Leave your name and company", "ASK: when should I try again?"], q: "\"Leave a message.\" / \"They'll call you back.\"", goal: "Leave it short and set your own follow-up.", say: ["Sure. Please let them know [SDR Name] from One Wealth Map called.", "When is a good time for me to try again?"] },
+    { id: "notint", kw: ["I understand", "ASK: what makes you say that?"], q: "\"They're not interested.\" (for the owner)", goal: "Probe without sounding confrontational.", say: ["I understand. May I ask what makes you say that?", "That helps me know if a call with [Owner] still makes sense."] },
+    { id: "decide", kw: ["Thank you", "ASK: part of ownership, or operations?"], q: "\"I handle these decisions.\"", goal: "Find out kindly if they're an owner or staff.", say: ["Thank you. Are you part of the ownership, or do you help manage operations?"] },
+    { id: "recorded", kw: ["I understand", "ASK: better number or email?"], q: "\"Calls are recorded. They can't discuss this here.\"", goal: "Respect it. Ask for another way to reach the owner.", say: ["I understand. Is there a better number or email for [Owner]?"] },
+    { id: "remove", kw: ["Of course, you'll be removed", "Thank them", "Mark DNC in GHL"], q: "\"No unsolicited calls. Remove us.\"", goal: "Exit politely. Mark Do Not Call in GHL right away.", say: ["Of course. I'll make sure your number is removed.", "Thank you for your time."] }
   ];
   var OWNER_OBJ = [
     { q: "\"I'm good.\" / \"We're doing well.\"", say: ["That's great to hear!", "When you picture the practice five years from now, are you still running it, handing it off, or already out?"] },
@@ -307,6 +321,12 @@ summary { align-items: flex-start; }
   fresh();
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
+  var MODE = "cue";
+  function sayCue(beats, lines) {
+    if (MODE === "full" || !beats) return say(lines);
+    return '<div class="cues">' + beats.map(function (b, i) { var ask = /^ASK/.test(b); return '<div class="cuec' + (ask ? " ask" : "") + '"><span class="n">' + (i + 1) + "</span><span>" + esc(b) + "</span></div>"; }).join("") +
+      '</div><details class="full"><summary>Stuck? Show the full line</summary><div class="in">' + say(lines, true) + "</div></details>";
+  }
   function say(lines, sm) { return '<div class="say' + (sm ? " sm" : "") + '">' + lines.map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + "</div>"; }
   function tkey() { return S.who === "advisor" ? "rec" : S.track; }
   function T() { return TRACKS[tkey()]; }
@@ -314,6 +334,7 @@ summary { align-items: flex-start; }
 
   function steps() {
     var list = [{ id: "greet", label: "Greet" }];
+    if (S.r.r_isit === "no") list.push({ id: "gate", label: "Gatekeeper" });
     if (S.who === "owner") list.push({ id: "open", label: "Open" }, { id: "route", label: "Discovery" });
     list.push({ id: "pitch", label: "Pitch" }, { id: "ask", label: "Track questions" }, { id: "wrap", label: "Wrap up" });
     return list;
@@ -322,6 +343,8 @@ summary { align-items: flex-start; }
     if (id === "greet") return true;
     var st = steps(), ix = function (x) { return st.findIndex(function (s) { return s.id === x; }); };
     if (S.step !== "end" && deadEnd() && ix(id) > ix(S.step)) return false;
+    if (id === "gate") return S.r.r_isit === "no";
+    if (S.r.r_isit === "no" && ["on", "new"].indexOf(S.r.r_avail) < 0) return false;
     if (!S.who || S.who === "unsure") return false;
     if (id === "open" || id === "route") return S.who === "owner";
     if (!T()) return false;
@@ -333,10 +356,10 @@ summary { align-items: flex-start; }
   // Dead ends: the call can't move forward, so offer "Done" instead of "Next".
   function deadEnd() {
     if (S.step === "greet" && S.r.r_isit === "vm") return "No answer";
-    if (S.step === "greet" && S.r.r_isit === "no" && S.r.r_avail === "na") return "Prospect not available";
-    if (S.step === "greet" && S.r.r_isit === "no" && S.r.r_avail === "cb") return "Callback time set";
-    if (S.step === "greet" && S.r.r_isit === "no" && S.r.r_avail === "info") return "Got direct line or email";
-    if (S.step === "greet" && S.r.r_isit === "no" && S.r.r_avail === "dnc") return "Asked to be removed";
+    if (S.step === "gate" && S.r.r_avail === "na") return "Prospect not available";
+    if (S.step === "gate" && S.r.r_avail === "cb") return "Callback time set";
+    if (S.step === "gate" && S.r.r_avail === "info") return "Got direct line or email";
+    if (S.step === "gate" && S.r.r_avail === "dnc") return "Asked to be removed";
     if (S.step === "pitch" && S.r.r_pitch === "dnc") return "Asked to be removed";
     if (S.step === "greet" && S.r.r_isit === "wrong" && S.r.r_wrong === "end") return "Wrong number";
     if (S.step === "open" && S.r.r_time === "busy") return "Busy · call back later";
@@ -368,7 +391,7 @@ summary { align-items: flex-start; }
     }
     var st = steps(), i = st.findIndex(function (s) { return s.id === S.step; });
     var nxt = st[i + 1], prv = st[i - 1], ok = nxt && canGo(nxt.id), why = "";
-    if (nxt && !ok) why = S.step === "greet" ? "Pick who is on the phone first." : S.step === "route" ? "Pick the track first." : "";
+    if (nxt && !ok) why = S.step === "greet" ? (S.r.r_isit === "no" ? "" : "Pick who is on the phone first.") : S.step === "gate" ? "Pick where it landed, then who is on the phone." : S.step === "route" ? "Pick the track first." : "";
     if (S.step === "pitch" && !S.pitched) { ok = false; why = "Tick \"Pitch done\" first."; }
     return '<div class="nav">' + (prv ? '<button class="btn ghost" data-go="' + prv.id + '">← Back</button>' : "<span></span>") +
       (nxt ? '<div class="row">' + (why ? '<span class="why">' + esc(why) + "</span>" : "") + '<button class="btn" data-go="' + nxt.id + '"' + (ok ? "" : " disabled") + ">Next: " + esc(nxt.label) + " →</button></div>" : "") + "</div>";
@@ -400,31 +423,42 @@ summary { align-items: flex-start; }
       chk("pc_time", "It's between <b>8 AM and 9 PM in their time zone</b>.") +
       chk("pc_real", "Use your <b>real name</b>, the same way on every call.") + "</div></div>";
     h += '<div class="block"><span class="k">You say</span>' + say(["Hi, this is [SDR Name] with One Wealth Map.", "Is this [Prospect Name]?"]) + "</div>";
-    h += choice("r_isit", "What happened?", [["yes", "Yes, it's them"], ["no", "Someone else answered"], ["wrong", "Wrong number"], ["vm", "No answer"]]);
+    h += choice("r_isit", "Who answered?", [["yes", "The prospect"], ["no", "A gatekeeper (receptionist, assistant, operator)"], ["wrong", "Wrong number"], ["vm", "No answer / voicemail"]]);
     if (S.r.r_isit === "yes") h += ack();
-    if (S.r.r_isit === "no") {
-      h += '<div class="block"><span class="k">Gatekeeper: get connected</span>' + cue("<b>Short, purpose, redirect, polite.</b> One or two sentences, then ask for [Prospect Name] again. Never mention selling, merging, recruiting or numbers to a gatekeeper.") +
+    if (S.r.r_isit === "no") h += '<p class="next"><b>Gatekeeper.</b> Go to the Gatekeeper step. Your only goal there: get connected, or leave with a time, a direct line or an email.</p>';
+    if (S.r.r_isit === "wrong") h += choice("r_wrong", "Is the person who answered a financial advisor or firm owner?", [["end", "No, or not interested"], ["new", "Yes, and open to talk"]]);
+    var isNew = S.r.r_isit === "wrong" && S.r.r_wrong === "new";
+    if (isNew) h += '<div class="block"><span class="k">New contact: the person on the phone</span><div class="flds">' + field("nc_name", "Their name", "First and last name") + field("nc_firm", "Their firm", "Firm name") + field("nc_phone", "Best number", "Confirm it out loud") + field("nc_email", "Best email", "Optional") + "</div>" + cue("You are now talking to a new contact. Find out if they own the firm, then continue with them. <b>Never</b> share anything about the person you were calling.") + "</div>";
+    var reached = S.r.r_isit === "yes" || (S.r.r_isit === "wrong" && S.r.r_wrong === "new");
+    if (reached) h += whoBlock();
+    if (reached && S.who === "unsure") h += unsureBlock();
+    if (reached && S.who === "advisor") h += advisorNote();
+    if (S.r.r_isit === "vm") h += noAnswer();
+    h += nextBlock() + "</div>";
+    return h;
+  }
+  function whoBlock() { return '<div class="block"><span class="k">Who is on the phone? <span class="req">Required</span></span><div class="opts">' +
+      radio("who", "owner", "A firm owner", "Founder, principal or majority owner of an RIA", "t-owner") +
+      radio("who", "advisor", "An individual advisor", "Works at someone else's firm → Recruit only", "t-rec") +
+      radio("who", "unsure", "Not sure yet", "GHL and the lead source don't say", "t-owner") + "</div></div>"; }
+  function unsureBlock() { return '<div class="block"><span class="k">Ask early</span>' + say(["Quick question so I don't waste your time:", "are you the owner of the practice, or part of a larger team?"]) + ansBox("a1", "Their answer") + cue("Their answer tells you which to pick above.") + "</div>"; }
+  function advisorNote() { return '<p class="next"><b>Recruit track.</b> Never pitch "sell your book" or succession to someone who doesn\'t own the firm. Next, go straight to the Recruit pitch.</p>'; }
+  function viewGate() {
+    var h = head("Step 2 · Gatekeeper", "Get past the gatekeeper", "Short, purpose, redirect, polite. One or two sentences, then ask for [Prospect Name] again.");
+    h += '<div class="bd">';
+      h += '<div class="block"><span class="k">Your goal: get connected</span>' + cue("<b>Short, purpose, redirect, polite.</b> One or two sentences, then ask for [Prospect Name] again. Never mention selling, merging, recruiting or numbers to a gatekeeper.") +
         '<div class="flds">' + field("id_name", "Gatekeeper's name", "Use it on the call") + field("id_rel", "Their role", "e.g., receptionist, assistant") + "</div></div>";
       h += '<div class="block"><span class="k">What did the gatekeeper say?</span><div class="opts cols">' + GK.map(function (g) {
         return '<label class="opt"><input type="radio" name="r_gk" value="' + g.id + '"' + (S.r.r_gk === g.id ? " checked" : "") + "><span><b>" + esc(g.q) + "</b></span></label>"; }).join("") + "</div></div>";
       var g = GK.filter(function (x) { return x.id === S.r.r_gk; })[0];
-      if (g) h += '<div class="gk"><span class="goal">Goal: ' + esc(g.goal) + "</span>" + say(g.say) + "</div>";
+      if (g) h += '<div class="gk"><span class="goal">Goal: ' + esc(g.goal) + "</span>" + sayCue(g.kw, g.say) + "</div>";
       h += choice("r_avail", "Where did it land?", [["on", "Transferred: they're coming on the line"], ["cb", "Got a callback time"], ["info", "Got a direct line or email"], ["na", "Not available, nothing else"], ["dnc", "Asked to be removed"], ["new", "This person is an advisor or owner and open to talk"]]);
       if (S.r.r_avail === "cb" || S.r.r_avail === "info" || S.r.r_avail === "na") h += '<div class="flds">' + field("id_best", S.r.r_avail === "info" ? "Direct line or email" : "Callback day and time (their time zone)", "Write it exactly") + "</div>";
       if (S.r.r_avail === "dnc") h += '<p class="never"><b>Mark Do Not Call in GHL right away.</b> Don\'t call this number again.</p>';
-    }
-    if (S.r.r_isit === "wrong") h += choice("r_wrong", "Is the person who answered a financial advisor or firm owner?", [["end", "No, or not interested"], ["new", "Yes, and open to talk"]]);
-    var isNew = (S.r.r_isit === "no" && S.r.r_avail === "new") || (S.r.r_isit === "wrong" && S.r.r_wrong === "new");
-    if (isNew) h += '<div class="block"><span class="k">New contact: the person on the phone</span><div class="flds">' + field("nc_name", "Their name", "First and last name") + field("nc_firm", "Their firm", "Firm name") + field("nc_phone", "Best number", "Confirm it out loud") + field("nc_email", "Best email", "Optional") + "</div>" + cue("You are now talking to a new contact. Find out if they own the firm, then continue with them. <b>Never</b> share anything about the person you were calling.") + "</div>";
-    var reached = S.r.r_isit === "yes" || (S.r.r_isit === "no" && (S.r.r_avail === "on" || S.r.r_avail === "new")) || (S.r.r_isit === "wrong" && S.r.r_wrong === "new");
-    if (S.r.r_isit === "no" && S.r.r_avail === "on") h += ack("When [Prospect Name] comes on, confirm it's them, then continue.");
-    if (reached) h += '<div class="block"><span class="k">Who is on the phone? <span class="req">Required</span></span><div class="opts">' +
-      radio("who", "owner", "A firm owner", "Founder, principal or majority owner of an RIA", "t-owner") +
-      radio("who", "advisor", "An individual advisor", "Works at someone else's firm → Recruit only", "t-rec") +
-      radio("who", "unsure", "Not sure yet", "GHL and the lead source don't say", "t-owner") + "</div></div>";
-    if (S.who === "unsure") h += '<div class="block"><span class="k">Ask early</span>' + say(["Quick question so I don't waste your time:", "are you the owner of the practice, or part of a larger team?"]) + ansBox("a1", "Their answer") + cue("Their answer tells you which to pick above.") + "</div>";
-    if (S.who === "advisor") h += '<p class="next"><b>Recruit track.</b> Never pitch "sell your book" or succession to someone who doesn\'t own the firm. Next, go straight to the Recruit pitch.</p>';
-    if (S.r.r_isit === "vm") h += noAnswer();
+    
+    if (S.r.r_avail === "on") h += ack("When [Prospect Name] comes on, greet them, confirm it's them, then continue.");
+    if (S.r.r_avail === "new") h += '<div class="block"><span class="k">New contact: the person on the phone</span><div class="flds">' + field("nc_name", "Their name", "First and last name") + field("nc_firm", "Their firm", "Firm name") + field("nc_phone", "Best number", "Confirm it out loud") + field("nc_email", "Best email", "Optional") + "</div>" + cue("Find out if they own the firm, then continue with them. <b>Never</b> share anything about the person you were calling.") + "</div>";
+    if (S.r.r_avail === "on" || S.r.r_avail === "new") { h += whoBlock(); if (S.who === "unsure") h += unsureBlock(); if (S.who === "advisor") h += advisorNote(); }
     h += nextBlock() + "</div>";
     return h;
   }
@@ -436,8 +470,8 @@ summary { align-items: flex-start; }
   function viewOpen() {
     var h = head("Step 2 · Firm owner", "Open the call", "You already said your name in the greeting, so start from the second line.");
     h += '<div class="bd">' + src("Section 4.1, Opening (owners).");
-    h += '<div class="block"><span class="k">You say</span><div class="say"><span class="skip">' + esc(OPENING[0]) + ' <em>(skip · already said)</em></span>' +
-      OPENING.slice(1).map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + "</div></div>";
+    h += '<div class="block"><span class="k">You say</span>' + (MODE === "cue" ? '<p class="tip">Skip your name: you already said it.</p>' + sayCue(OPENING_B.slice(1), OPENING.slice(1)) : '<div class="say"><span class="skip">' + esc(OPENING[0]) + ' <em>(skip · already said)</em></span>' +
+      OPENING.slice(1).map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + "</div>") + "</div>";
     h += choice("r_time", "Their answer to \"Do you have two minutes?\"", [["yes", "Yes"], ["busy", "Busy right now"]]);
     if (S.r.r_time === "yes") h += ack("Acknowledge, then go to Discovery.");
     if (S.r.r_time === "busy") h += '<div class="block"><div class="flds">' + field("cb_time", "Better time to call back", "Day / time / time zone") + "</div>" + cue("Agree a call-back time, then press <b>Done</b> below.") + "</div>";
@@ -460,9 +494,9 @@ summary { align-items: flex-start; }
   }
   function viewPitch() {
     var t = T(), n = S.who === "owner" ? 4 : 2, k = tkey(), sec = { sell: "5", merge: "6", succ: "7", rec: "8" }[k];
-    var h = head("Step " + n + " · " + t.name, "Give the 30-second pitch", "Lead with: " + t.lead + ". Say the full pitch.");
+    var h = head("Step " + n + " · " + t.name, "Give the 30-second pitch", "Lead with: " + t.lead + ". Hit every cue, in your own words.");
     h += '<div class="bd">' + src("Section " + sec + ", 30-second pitch.");
-    h += '<div class="block"><span class="k">You say <span class="req">Required</span></span>' + say(t.pitch) + "</div>";
+    h += '<div class="block"><span class="k">You say <span class="req">Required</span></span>' + sayCue(t.beats, t.pitch) + "</div>";
     h += cue("<b>The pitch ends with a question.</b> Stop and let them answer.");
     h += choice("r_pitch", "Their answer", [["yes", "Yes / open to it"], ["push", "Hesitant or pushing back"], ["no", "Not interested"], ["dnc", "Asked not to be called again"]]);
     if (S.r.r_pitch === "dnc") h += '<p class="never"><b>Stop the pitch.</b> Thank them, then mark Do Not Call in GHL right away.</p>';
@@ -554,7 +588,7 @@ summary { align-items: flex-start; }
     }
     if (S.who !== "advisor") {
       h += '<div class="hbox t-owner"><h3>Questions about us</h3><p class="tip"><b>Tap the question</b> to see your answer. Then go back to your step.</p>' + ABOUT_US.map(function (a) {
-        return "<details data-d=\"a" + ABOUT_US.indexOf(a) + "\"" + (OPEN["a" + ABOUT_US.indexOf(a)] ? " open" : "") + "><summary><span class=\"tg\">They ask</span>" + esc(a.q) + "</summary><div class=\"in\">" + (a.ok ? '<span class="ok">✓ ' + esc(a.ok) + "</span>" : "") + (a.note ? '<p class="tip">' + esc(a.note) + "</p>" : "") + say(a.say) + ansBox("ab" + ABOUT_US.indexOf(a), "What they said / notes", "Optional") + "</div></details>";
+        return "<details data-d=\"a" + ABOUT_US.indexOf(a) + "\"" + (OPEN["a" + ABOUT_US.indexOf(a)] ? " open" : "") + "><summary><span class=\"tg\">They ask</span>" + esc(a.q) + "</summary><div class=\"in\">" + (a.ok ? '<span class="ok">✓ ' + esc(a.ok) + "</span>" : "") + (a.note ? '<p class="tip">' + esc(a.note) + "</p>" : "") + sayCue(a.beats, a.say) + ansBox("ab" + ABOUT_US.indexOf(a), "What they said / notes", "Optional") + "</div></details>";
       }).join("") + "</div>";
     }
     h += '<div class="hbox rules"><h3>Always</h3><ul><li>No valuations, prices, multiples or deal terms. The principals and counsel handle numbers, only after an NDA.</li><li>Never say who else we\'re talking to.</li><li>Never imply the owner\'s clients automatically come across in a deal.</li><li>Recruits: never ask for client lists or client data. Never coach them on their non-solicit or non-compete.</li><li>Use your real name. Never say our founder asked for the call, came across their practice, or wants to meet them personally.</li><li>Only approved facts: multi-family office, about $300 million, about 40% a year, founder has built and sold a few firms. No "more leads than we can handle."</li><li>Someone asks to be removed? Mark Do Not Call in GHL right away.</li></ul></div>';
@@ -575,12 +609,17 @@ summary { align-items: flex-start; }
       if (!r.r_isit) return "Check the GHL name and lead source, then greet. Ask for [Prospect Name] by first name.";
       if (r.r_isit === "vm") return "Leave a voicemail under 20 seconds (name and number twice), send the track email, then log it.";
       if (r.r_isit === "wrong") return "Ask if they're an advisor or owner. If not, end politely and mark the number wrong.";
-      if (r.r_isit === "no" && !r.r_gk) return "Pick what the gatekeeper said to see your line.";
-      if (r.r_isit === "no" && !r.r_avail) return "Redirect: ask if [Prospect Name] is available. Aim to leave with a transfer, a time, a direct line or an email.";
+      if (r.r_isit === "no") return "A gatekeeper answered. Go to the Gatekeeper step.";
+      if (!S.who) return "Confirm who is on the phone: owner or individual advisor?";
+      if (S.who === "unsure") return "Ask: \"Are you the owner of the practice, or part of a larger team?\"";
+      return S.who === "advisor" ? "Go to the Recruit pitch." : "Go to the opening.";
+    }
+    if (S.step === "gate") {
+      if (!r.r_gk) return "Ask for [Prospect Name] by first name. Pick what the gatekeeper said to see your cue.";
+      if (!r.r_avail) return "Say your cue, then redirect: ask if [Prospect Name] is available. Aim for a transfer, a time, a direct line or an email.";
       if (r.r_avail === "dnc") return "Thank them and mark Do Not Call in GHL right away.";
       if (r.r_avail === "cb" || r.r_avail === "info" || r.r_avail === "na") return "Write down what you got, thank the gatekeeper by name, then end the call and log it.";
       if (!S.who) return "Confirm who is on the phone: owner or individual advisor?";
-      if (S.who === "unsure") return "Ask: \"Are you the owner of the practice, or part of a larger team?\"";
       return S.who === "advisor" ? "Go to the Recruit pitch." : "Go to the opening.";
     }
     if (S.step === "open") return r.r_time === "busy" ? "Agree a specific callback time in their time zone, then end the call." : "Say the opening, then ask \"Do you have two minutes?\"";
@@ -614,9 +653,11 @@ summary { align-items: flex-start; }
       '<h3>Leave with something</h3><div class="ladder">' + rungs.map(function (x) { return '<div class="rung' + (hits[x[0]] ? " hit" : "") + '"><b>' + (hits[x[0]] ? "✓ " : "") + esc(x[1]) + "</b><span>" + esc(x[2]) + '</span><span class="bar"></span></div>'; }).join("") + "</div>";
   }
   function render() {
-    var v = { end: viewEnd, greet: viewGreet, open: viewOpen, route: viewRoute, pitch: viewPitch, ask: viewAsk, wrap: viewWrap }[S.step];
+    var v = { end: viewEnd, greet: viewGreet, gate: viewGate, open: viewOpen, route: viewRoute, pitch: viewPitch, ask: viewAsk, wrap: viewWrap }[S.step];
     $("main").className = "main " + cls();
     $("main").innerHTML = v();
+    if (MODE === "cue" && S.step !== "end") { var bd = $("main").querySelector(".bd"); if (bd) bd.insertAdjacentHTML("afterbegin", '<p class="cuehint"><b>Don\'t read. Talk.</b> Glance at the cue, say it in one breath, then pause. If you lose your place: "Sorry, just to finish..." and go to the next cue.</p>'); }
+    $("mode").textContent = MODE === "cue" ? "Mode: Cue cards" : "Mode: Full script";
     renderProgress(); renderHelp(); renderMap();
   }
   function go(id) { if (!canGo(id)) return; S.step = id; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
@@ -632,6 +673,7 @@ summary { align-items: flex-start; }
       var fallback = function () { ta.focus(); ta.select(); ok.textContent = "Press Ctrl+C (or Cmd+C) to copy."; };
       try { navigator.clipboard.writeText(txt).then(function () { ok.textContent = "Copied. Paste it into GHL."; }, fallback); } catch (err) { fallback(); }
     }
+    if (e.target.id === "mode") { MODE = MODE === "cue" ? "full" : "cue"; render(); return; }
     if (e.target.id === "newcall") { fresh(); OPEN = {}; render(); window.scrollTo({ top: 0 }); }
   });
   document.addEventListener("change", function (e) {
